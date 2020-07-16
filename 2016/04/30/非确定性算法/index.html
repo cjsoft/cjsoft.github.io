@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/04/30/非确定性算法/">
+    
+    
+    <title>非确定性算法 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,其他,算法">
+    <meta name="description" content="虽然在OI中并不实用，但是这种算法本身具有非常大的实用价值。事实上，一些非确定性算法在现实中的应用比对应的确定性算法要广泛的多。下面介绍两种非确定性算法。  
+1. Miller Rabbin Primality TestMR素性测试是一个常用的非确定性素数检查算法，在OI中也有一定的应用，它的复杂度是O(log(n))，远远小于确定性的AKS，复杂度为O(log(n)^6 )，和朴素枚举，复杂度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="非确定性算法">
+<meta property="og:url" content="http://cjsoft.github.io/2016/04/30/非确定性算法/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="虽然在OI中并不实用，但是这种算法本身具有非常大的实用价值。事实上，一些非确定性算法在现实中的应用比对应的确定性算法要广泛的多。下面介绍两种非确定性算法。  
+1. Miller Rabbin Primality TestMR素性测试是一个常用的非确定性素数检查算法，在OI中也有一定的应用，它的复杂度是O(log(n))，远远小于确定性的AKS，复杂度为O(log(n)^6 )，和朴素枚举，复杂度">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="非确定性算法">
+<meta name="twitter:description" content="虽然在OI中并不实用，但是这种算法本身具有非常大的实用价值。事实上，一些非确定性算法在现实中的应用比对应的确定性算法要广泛的多。下面介绍两种非确定性算法。  
+1. Miller Rabbin Primality TestMR素性测试是一个常用的非确定性素数检查算法，在OI中也有一定的应用，它的复杂度是O(log(n))，远远小于确定性的AKS，复杂度为O(log(n)^6 )，和朴素枚举，复杂度">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">非确定性算法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">非确定性算法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-30T15:59:49.000Z" itemprop="datePublished" class="page-time">
+  2016-04-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/其他/">其他</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-Miller-Rabbin-Primality-Test"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. Miller Rabbin Primality Test</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-Bloom-Filter"><span class="post-toc-number">2.</span> <span class="post-toc-text">2. Bloom Filter</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-非确定性算法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">非确定性算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年04月30日 15:59" datetime="2016-04-30T15:59:49.000Z"  itemprop="datePublished">2016-04-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/其他/">其他</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>虽然在OI中并不实用，但是这种算法本身具有非常大的实用价值。事实上，一些非确定性算法在现实中的应用比对应的确定性算法要广泛的多。<br>下面介绍两种非确定性算法。  </p>
+<h2 id="1-Miller-Rabbin-Primality-Test"><a href="#1-Miller-Rabbin-Primality-Test" class="headerlink" title="1. Miller Rabbin Primality Test"></a>1. Miller Rabbin Primality Test</h2><p>MR素性测试是一个常用的非确定性素数检查算法，在OI中也有一定的应用，它的复杂度是O(log(n))，远远小于确定性的AKS，复杂度为O(log(n)^6 )，和朴素枚举，复杂度为O(sqrt(n))。<br>MR素性测试的失误率取决于测试集。当随机选取测试集时，它的错误率为4^(-len(testSet))，一个精心选取的测试集可以保证一定范围内的测试的结果的完全正确，这也是他被广泛应用的原因。<br>下面给出一个Python 2.7的MR测试样例代码，其中使用的测试集保证1到1e16范围内结果无误。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="comment">#Copyright 2015 CJSoft</span></span><br><span class="line"></span><br><span class="line">testSet = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">13</span>, <span class="number">61</span>, <span class="number">24251</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qpow</span><span class="params">(x, y, n)</span>:</span></span><br><span class="line">	resu = <span class="number">1</span></span><br><span class="line">	<span class="keyword">while</span> (y &gt; <span class="number">0</span>):</span><br><span class="line">		<span class="keyword">if</span> (y &amp; <span class="number">1</span> == <span class="number">1</span>): resu = (resu * x) % n</span><br><span class="line">		y = y &gt;&gt; <span class="number">1</span></span><br><span class="line">		x = (x * x) % n</span><br><span class="line">	<span class="keyword">return</span> resu</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MillerRabinTest</span><span class="params">(a, n, d, s)</span>:</span></span><br><span class="line">	<span class="comment"># True if it's likely to be a prime.</span></span><br><span class="line">	<span class="keyword">if</span> (n == <span class="number">2</span> <span class="keyword">or</span> n == a): <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">	<span class="keyword">if</span> ((n &amp; <span class="number">1</span>) == <span class="number">0</span>): <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">	<span class="keyword">for</span> r <span class="keyword">in</span> xrange(s):</span><br><span class="line">		<span class="keyword">if</span> (qpow(a, d, n) == <span class="number">1</span> <span class="keyword">or</span> (qpow(a, (<span class="number">1</span> &lt;&lt; r) * d, n) <span class="keyword">in</span> &#123;-<span class="number">1</span>, n - <span class="number">1</span>&#125;)):</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isPrime</span><span class="params">(x)</span>:</span></span><br><span class="line">	<span class="keyword">global</span> testSet</span><br><span class="line">	<span class="keyword">if</span> (x &lt; <span class="number">2</span>): <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">	tint = x - <span class="number">1</span></span><br><span class="line">	s = <span class="number">0</span></span><br><span class="line">	<span class="keyword">while</span> (tint &amp; <span class="number">1</span> == <span class="number">0</span>):</span><br><span class="line">		tint = tint &gt;&gt; <span class="number">1</span></span><br><span class="line">		s = s + <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> testSet:</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span>(MillerRabinTest(i, x, tint, s)):</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"><span class="keyword">if</span> (__name__ == <span class="string">"__main__"</span>):</span><br><span class="line">	<span class="keyword">import</span> sys</span><br><span class="line">	<span class="keyword">if</span> (len(sys.argv) &gt; <span class="number">1</span>):</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">    			<span class="keyword">print</span> isPrime(int(i))</span><br><span class="line">            <span class="keyword">except</span> BaseException:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"Illegal input"</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				a = int(input(<span class="string">"&gt;&gt;&gt; "</span>))</span><br><span class="line">				<span class="keyword">print</span> isPrime(a)</span><br><span class="line">			<span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">				<span class="keyword">print</span> <span class="string">"Bye!"</span></span><br><span class="line">				sys.exit(<span class="number">0</span>)</span><br><span class="line">			<span class="keyword">except</span> BaseException:</span><br><span class="line">				<span class="keyword">print</span> <span class="string">"Illegal input"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Copyright 2015 CJSoft</span><br><span class="line"> * This piece of code have somethings to</span><br><span class="line"> * do with primality test.</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll; <span class="comment">//NOLINT</span></span><br><span class="line"><span class="function">ll <span class="title">quickPow</span><span class="params">(ll x, ll y, ll MOD)</span> </span>&#123;</span><br><span class="line">    ll resu = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (y &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (y &amp; <span class="number">1</span>) resu = (resu * x) % MOD;</span><br><span class="line">        y &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        x = (x * x) % MOD;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resu;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">MillerRabbinTest</span><span class="params">(ll a, ll n, ll d, ll s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">2</span> || n == a) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (!(n &amp; <span class="number">1</span>)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (quickPow(a, d, n) == <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s; ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (quickPow(a, (<span class="number">1</span> &lt;&lt; i) * d, n) == n - <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isPrime</span><span class="params">(ll x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> ll testCase[] = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">13</span>, <span class="number">61</span>, <span class="number">24251</span>&#125;;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    ll tint = x - <span class="number">1</span>;</span><br><span class="line">    ll s = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (!(tint &amp; <span class="number">1</span>)) &#123;</span><br><span class="line">        tint &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        ++s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span>(testCase) / <span class="keyword">sizeof</span>(ll); ++i)</span><br><span class="line">        <span class="keyword">if</span> (!MillerRabbinTest(testCase[i], x, tint, s))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-Bloom-Filter"><a href="#2-Bloom-Filter" class="headerlink" title="2. Bloom Filter"></a>2. Bloom Filter</h2><p>Bloom Filter算法非常简单易懂，他被广泛的应用在爬虫技术中。<br>它的功能是确定一个元素是否在集合之中，优势在于只使用非常少的空间，就可以维护数额巨大的元素的信息。<strong>它只能确定一个元素是否在一个集合中</strong>。然而内存、时间、准确性三者往往在一定程度上是守恒的，使用越少的内存，BF的准确性就越低。它的复杂度是O(1)的。<br>下面说一下它的原理。<br><strong>他就是个hash加强版。</strong>  </p>
+<ol>
+<li>当我们查询一个元素是否在集合中，我们使用少至几个多至几十个的不同的hash函数得出许多元素的hash值（要实现的话hash函数可以使用几个固定的，外加一些随机生成的hash函数，这个在第一次使用BF之前就要做，除此之外还要准备相应数目的bitset），检查每个函数对应的bitset的对应位上是否为1，如果所有对应位的值都为1的话，说明这个元素有可能在这个集合中，反之一定不再这个集合中。  </li>
+<li>当我们将一个元素加入到集合中的话，我们算出那些hash值，set一下每个hash函数对应的bitset上hash值对应位即可（也就是赋成1）  </li>
+<li>关于元素的移除。<br>BF有个变种叫做Counting Bloom Filter，看了名字大概就明白怎么回事了吧=w=。<br>详情请去问问神奇海螺吧、</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/非确定性算法/&title=《非确定性算法》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/非确定性算法/&title=《非确定性算法》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/非确定性算法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《非确定性算法》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/非确定性算法/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/非确定性算法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/30/BKDR-hash/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">BKDR-hash</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/30/我好害怕/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">我好害怕</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/非确定性算法/&title=《非确定性算法》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/非确定性算法/&title=《非确定性算法》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/非确定性算法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《非确定性算法》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/非确定性算法/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/非确定性算法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aS26DUAwF0Ox/0+m0g0KubVIJcxghpSScV8ny7/WKr/ev6+jTo78/eur82dc3LgwMjNsy3qfXEePofvL9R/fnz2JgYDyHcR4K8yCYHEGP9+GdMTAwMILgey0bAwMD4ypGFTNJQDEwMDCuLTKrx3R+fBfX4hgYGDdk5Anc/99/Zb6BgYFxK8a7eCWBMk8iq+nj4VthYGCsZuQBbv6KeRLZex8MDIytjGrgqzb0vzFyKOStGBgYKxiTYnICq65iRMeEgYGxlNErXydJYZ5WFlpvGBgYD2DkwTQ/iF4IThLBw64hBgbGwxj56kM5OMbhuJCqYmBgrGZMAL1iNW/GJcfUbMNhYGDckFFdnqi2z6qDyd4IAQMDYyujF9rytYmoBG0NHv74P2BgYKxm9IYH5bjeKmij98TAwFjN6IXC5BvmiWazDMbAwFjKyMNotUzNi9JJyMbAwNjNuGpYmLOTsJ4PODEwMJ7AqJImvMmoMk9AMTAwtjLmzf3eeDIPr9GxYmBgPJiR/0zyabWfn7wVBgbGcxjVFn+vyJwknR9+CwMDYynjXbyS9lm1uZaMMwtJIQYGxjrGVYsUvaI0D+gXzGkxMDBuzqiuZFUXNXojzNFaGAYGxlJGNfBN1sWqzbhosQMDAwOj1VDLhwfJrxS2RTAwMDDGSxi9VbAPJAwMjAcwemsTyUpZb82ifEwYGBirGb3SMUkBq2OGSUGLgYGxlPEDZCNLqUlKLQcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

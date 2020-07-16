@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/04/30/Wallace-Chu-的线段树风格/">
+    
+    
+    <title>Wallace Chu 的线段树风格 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,数据结构,树">
+    <meta name="description" content="tag中存储的是左右子树中stree的待加的单位值，也就是说当一个节点他的祖先tag全为0时，我们保证它的stree值是准确的。
+除此之外pushdown/update的时机需要注意，一个是在query/edit中对左右子树递归之前进行pushdown，另一个是add区间左右子树都递归的add之后回溯的时候update。据此，我们可以得出，每次add之后，所有被新打上tag的节点的祖先都会被pus">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wallace Chu 的线段树风格">
+<meta property="og:url" content="http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="tag中存储的是左右子树中stree的待加的单位值，也就是说当一个节点他的祖先tag全为0时，我们保证它的stree值是准确的。
+除此之外pushdown/update的时机需要注意，一个是在query/edit中对左右子树递归之前进行pushdown，另一个是add区间左右子树都递归的add之后回溯的时候update。据此，我们可以得出，每次add之后，所有被新打上tag的节点的祖先都会被pus">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.576Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wallace Chu 的线段树风格">
+<meta name="twitter:description" content="tag中存储的是左右子树中stree的待加的单位值，也就是说当一个节点他的祖先tag全为0时，我们保证它的stree值是准确的。
+除此之外pushdown/update的时机需要注意，一个是在query/edit中对左右子树递归之前进行pushdown，另一个是add区间左右子树都递归的add之后回溯的时候update。据此，我们可以得出，每次add之后，所有被新打上tag的节点的祖先都会被pus">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Wallace Chu 的线段树风格</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Wallace Chu 的线段树风格</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-30T15:59:58.000Z" itemprop="datePublished" class="page-time">
+  2016-04-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数据结构/">数据结构</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数据结构/树/">树</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Wallace-Chu-的线段树风格"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Wallace Chu 的线段树风格</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年04月30日 15:59" datetime="2016-04-30T15:59:58.000Z"  itemprop="datePublished">2016-04-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数据结构/">数据结构</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数据结构/树/">树</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ol>
+<li>tag中存储的是左右子树中stree的待加的单位值，也就是说当一个节点他的祖先tag全为0时，我们保证它的stree值是准确的。</li>
+<li>除此之外pushdown/update的时机需要注意，一个是在query/edit中对左右子树递归之前进行pushdown，另一个是add区间左右子树都递归的add之后回溯的时候update。据此，我们可以得出，每次add之后，所有被新打上tag的节点的祖先都会被pushdown一次，tag会被清空。</li>
+<li>注意pushdown中判断<code>l != r</code>，否则会引发RE<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> lson(x) (x &lt;&lt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> rson(x) (x &lt;&lt; <span class="number">1</span> | <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> update(x) (stree[x] = stree[x &lt;&lt; <span class="number">1</span>] + stree[x &lt;&lt; <span class="number">1</span> | <span class="number">1</span>])</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> mid(l, r) ((l + r) &gt;&gt; <span class="number">1</span>)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> q;</span><br><span class="line">ll stree[<span class="number">1000007</span>];</span><br><span class="line">ll tag[<span class="number">1000007</span>];</span><br><span class="line">ll raw[<span class="number">1000007</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">        stree[root] = raw[l];</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    build(lson(root), l, mid(l, r));</span><br><span class="line">    build(rson(root), mid(l, r) + <span class="number">1</span>, r);</span><br><span class="line">    update(root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l == r) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (tag[root]) &#123;</span><br><span class="line">        tag[lson(root)] += tag[root];</span><br><span class="line">        tag[rson(root)] += tag[root];</span><br><span class="line">        stree[lson(root)] += tag[root] * (mid(l, r) - l + <span class="number">1</span>);</span><br><span class="line">        stree[rson(root)] += tag[root] * (r - mid(l, r));</span><br><span class="line">        tag[root] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// update(root);</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">query</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt; qr || r &lt; ql) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= ql &amp;&amp; r&lt;= qr) <span class="keyword">return</span> stree[root];</span><br><span class="line">    pushdown(root, l, r);</span><br><span class="line">    <span class="keyword">return</span> query(lson(root), l, mid(l, r), ql, qr) +</span><br><span class="line">           query(rson(root), mid(l, r) + <span class="number">1</span>, r, ql, qr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> al, <span class="keyword">int</span> ar, ll dataadd)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt; ar || r &lt; al) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= al &amp;&amp; r &lt;= ar) &#123;</span><br><span class="line">        tag[root] += dataadd;</span><br><span class="line">        stree[root] += (r - l + <span class="number">1</span>) * dataadd;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    pushdown(root, l, r);</span><br><span class="line">    add(lson(root), l, mid(l, r), al, ar, dataadd);</span><br><span class="line">    add(rson(root), mid(l, r) + <span class="number">1</span>, r, al, ar, dataadd);</span><br><span class="line">    update(root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a, b, x, y;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%lld"</span>, raw + i);</span><br><span class="line">    &#125;</span><br><span class="line">    build(<span class="number">1</span>, <span class="number">1</span>, n);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;q);</span><br><span class="line">    <span class="keyword">while</span> (q--) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;x, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;y);</span><br><span class="line">            add(<span class="number">1</span>, <span class="number">1</span>, n, a, b, y);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, query(<span class="number">1</span>, <span class="number">1</span>, n, a, b));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树/">树</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/&title=《Wallace Chu 的线段树风格》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/&title=《Wallace Chu 的线段树风格》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Wallace Chu 的线段树风格》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/01/这么长时间没出岔子真是奇迹/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">这么长时间没出岔子真是奇迹</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/30/树链剖分/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">树链剖分小结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/&title=《Wallace Chu 的线段树风格》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/&title=《Wallace Chu 的线段树风格》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Wallace Chu 的线段树风格》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/Wallace-Chu-的线段树风格/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqklEQVR42u3a0W4bIRAF0P3/n3alPLWqTO/MME4qHZ4i21o4RGLYC88Tt9dX+/uT39u7359/U23PRsPDw8NrDf38uOST85PP+HyE+Zjx8PDwtnnnYpBjbhWS6vPffo6Hh4f3rbxeZ+diUy0PeHh4eP8jLwkXJkOcTygeHh7eZ3jVRTyPLfIn5KSVrAUPDw9v4RTp5/y9eL6Hh4eHNzhV7y39yed5QPwaNDw8PLwN3vlo6ladmUxHvlEuvDHg4eHhXeVV44b5cl+NdKvBBx4eHt4Gr1okbm2y54dkhfKAh4eHt8ZLkJOrAzkp2VL3pg8PDw9vwjsvwfkWuRe8nvvNeU+vwuDh4eG1eDmyOqD82+qgy73g4eHhXeVNgtQkkrgbYZTDCDw8PLw1XnVZv7v5Pk9utdj847oVHh4e3lVeddG/e+3gvKWuBhl4eHh4e7zki96Fp+2LBcn2HQ8PD+8zvHnQUO44PjzrjRMPDw9vm3d3Wzw/TuuVEDw8PLxt3uglPwgRqjOdBMeFicDDw8Nb4+VXBHJS9dBrsmUvbKbx8PDwBrxeMZgs072LBdXi9MelKzw8PLw13qRUVK9t3bp6hYeHh/ddvF60GnVwKdJtxiJ4eHh4C7w8Tq0y8lLxBO3CvwEPDw/vEu8VtHw5TrbjyUTkTzg/GQ8PD+8zvF6cWl3oe9vxiJSnIHh4eHgt3sprf2ugvUOyPAjGw8PDu8V7FVtvUa5etEqm7NobAx4eHt6l/WevACTIauSRBBCF6oeHh4d3iZd3fKsM9E7q8ugEDw8P7zO8ZoZRjGUnW+dq0cLDw8P7Cbw8AshD4bzMVEeIh4eH93N4kwU9uXrVKx5ve8fDw8Nb41XDiN6xWe/qQG/i8PDw8PZ4ewdgyfFVslnPC8nTa3h4eHgp7xczqA0BNinkjgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

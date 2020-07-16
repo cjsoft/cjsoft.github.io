@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2019/05/20/操作系统进程同步实验/">
+    
+    
+    <title>操作系统进程同步实验 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="狗课">
+    <meta name="description" content="最近在写操作系统的进程同步实验，现在随便写点什么。实验基于川和秀实的《30天自制操作系统》的day24f代码，也就是进行代码分文件夹归类的最后一版。
+要求分析：
+
+实现系统内核态的共享变量竞争条件
+实现系统内核态的共享变量竞争条件的解决方案，并进一步实现某一个同步场景
+实现从用户态启动前两条内容
+基于30天实现展示用户程序中逻辑地址到物理地址的转换
+
+第一个。30天OS中的任务调度是以TASK为单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统进程同步实验">
+<meta property="og:url" content="http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="最近在写操作系统的进程同步实验，现在随便写点什么。实验基于川和秀实的《30天自制操作系统》的day24f代码，也就是进行代码分文件夹归类的最后一版。
+要求分析：
+
+实现系统内核态的共享变量竞争条件
+实现系统内核态的共享变量竞争条件的解决方案，并进一步实现某一个同步场景
+实现从用户态启动前两条内容
+基于30天实现展示用户程序中逻辑地址到物理地址的转换
+
+第一个。30天OS中的任务调度是以TASK为单">
+<meta property="og:image" content="http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/image_88.png">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统进程同步实验">
+<meta name="twitter:description" content="最近在写操作系统的进程同步实验，现在随便写点什么。实验基于川和秀实的《30天自制操作系统》的day24f代码，也就是进行代码分文件夹归类的最后一版。
+要求分析：
+
+实现系统内核态的共享变量竞争条件
+实现系统内核态的共享变量竞争条件的解决方案，并进一步实现某一个同步场景
+实现从用户态启动前两条内容
+基于30天实现展示用户程序中逻辑地址到物理地址的转换
+
+第一个。30天OS中的任务调度是以TASK为单">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">操作系统进程同步实验</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">操作系统进程同步实验</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-20T14:25:03.000Z" itemprop="datePublished" class="page-time">
+  2019-05-20
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-操作系统进程同步实验"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">操作系统进程同步实验</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019年05月20日 14:25" datetime="2019-05-20T14:25:03.000Z"  itemprop="datePublished">2019-05-20</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近在写操作系统的进程同步实验，现在随便写点什么。<br>实验基于川和秀实的《30天自制操作系统》的day24f代码，也就是进行代码分文件夹归类的最后一版。</p>
+<p>要求分析：</p>
+<ol>
+<li>实现系统内核态的共享变量竞争条件</li>
+<li>实现系统内核态的共享变量竞争条件的解决方案，并进一步实现某一个同步场景</li>
+<li>实现从用户态启动前两条内容</li>
+<li>基于30天实现展示用户程序中逻辑地址到物理地址的转换</li>
+</ol>
+<p>第一个。30天OS中的任务调度是以TASK为单位的，若要实现竞争条件，可以建立两个及以上数量的TASK，对同一个变量进行进行自加操作，检测自加前后的差值，如果大于1，那么就说明变量中间被别的TASK访问过。</p>
+<p>在实现的时候，我发现要出现竞争条件很难，所以我在自加之后加了一个长度为5的循环，这样就很容易出现竞争条件了。</p>
+<p>第二个。我重新整理了一下代码，做了一个sync_utils库。里面提供了一个快速创建任务的函数，以及原子的test_and_set、Swap、sem_wait、sem_signal。注意任何while的阻塞循环都应当io_hlt()，否则会一直占用CPU。利用这些函数，实现了一个生产者消费者的进程同步模型。</p>
+<p>剩下两个还没整。</p>
+<p>附一下sync_utils</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">/* sync_utils.c */</span><br><span class="line">/* 记得修改Makefile和bootpack.h */</span><br><span class="line">#include "bootpack.h"</span><br><span class="line">void avoid_sleep() &#123;</span><br><span class="line">	struct TASK *now_task;</span><br><span class="line">	now_task = task_now();</span><br><span class="line">	now_task-&gt;flags = 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int test_and_set(int *target) &#123;</span><br><span class="line">	io_cli();</span><br><span class="line">	int tmp = *target;</span><br><span class="line">	*target = 0xff;</span><br><span class="line">	io_sti();</span><br><span class="line">	return tmp;</span><br><span class="line">&#125;</span><br><span class="line">void Swap(int *a, int *b) &#123;</span><br><span class="line">	io_cli();</span><br><span class="line">	int tmp = *a;</span><br><span class="line">	*a = *b;</span><br><span class="line">	*b = tmp;</span><br><span class="line">	io_sti();</span><br><span class="line">&#125;</span><br><span class="line">void sem_signal(int *x) &#123;</span><br><span class="line">    io_cli();</span><br><span class="line">    (*x)++;</span><br><span class="line">    io_sti();</span><br><span class="line">&#125;</span><br><span class="line">void sem_wait(int *x) &#123;</span><br><span class="line">	while ((*x) &lt;= 0)</span><br><span class="line">		io_hlt();</span><br><span class="line">	io_cli();</span><br><span class="line">	(*x)--;</span><br><span class="line">	io_sti();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TASK *create_task(struct MEMMAN *man, void (*f)(void *), void *args) &#123;</span><br><span class="line">    struct TASK *tst = task_alloc();</span><br><span class="line">    tst-&gt;cons_stack = memman_alloc_4k(man, 64 * 1024);</span><br><span class="line">    tst-&gt;tss.esp = tst-&gt;cons_stack + 64 * 1024 - 8;</span><br><span class="line">    tst-&gt;tss.eip = (int)f;</span><br><span class="line">    tst-&gt;tss.es = 1 * 8;</span><br><span class="line">    tst-&gt;tss.cs = 2 * 8;</span><br><span class="line">    tst-&gt;tss.ss = 1 * 8;</span><br><span class="line">    tst-&gt;tss.ds = 1 * 8;</span><br><span class="line">    tst-&gt;tss.fs = 1 * 8;</span><br><span class="line">    tst-&gt;tss.gs = 1 * 8;</span><br><span class="line">    *((int *)(tst-&gt;tss.esp + 4)) = (int)args;</span><br><span class="line">    return tst;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用法示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> BBParg &#123; <span class="comment">// 参数类型</span></span><br><span class="line">	<span class="keyword">int</span> *empty, *mutex, *full, id;</span><br><span class="line">	<span class="keyword">int</span> *con_mutex;</span><br><span class="line">	<span class="keyword">struct</span> FIFO32 *fifo;</span><br><span class="line">	<span class="keyword">struct</span> TASK *task;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">producer</span><span class="params">(<span class="keyword">struct</span> BBParg *args)</span> </span>&#123;</span><br><span class="line">	avoid_sleep();</span><br><span class="line">	<span class="keyword">int</span> *empty = args-&gt;empty,</span><br><span class="line">		*mutex = args-&gt;mutex,</span><br><span class="line">		*full = args-&gt;full,</span><br><span class="line">		id = args-&gt;id;</span><br><span class="line">	<span class="keyword">struct</span> FIFO32 *fifo = args-&gt;fifo;</span><br><span class="line">	<span class="keyword">struct</span> TASK *task = args-&gt;task;</span><br><span class="line">	<span class="keyword">int</span> cnt = <span class="number">2</span>, i;</span><br><span class="line">	<span class="keyword">char</span> tag;</span><br><span class="line">	<span class="keyword">char</span> str[<span class="number">128</span>];</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		tag = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (!tag) &#123;</span><br><span class="line">			tag = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span> (i = <span class="number">2</span>; i * i &lt;= cnt; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (cnt % i == <span class="number">0</span>) &#123;</span><br><span class="line">					tag = <span class="number">0</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (!tag) cnt++;</span><br><span class="line">			<span class="keyword">if</span> (cnt &gt; <span class="number">0x3f3f3f</span>) cnt = <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		sem_wait(empty);</span><br><span class="line">		sem_wait(mutex);</span><br><span class="line">		fifo32_put(fifo, cnt++);</span><br><span class="line">		sem_signal(mutex);</span><br><span class="line">		sem_signal(full);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">consumer</span><span class="params">(<span class="keyword">struct</span> BBParg *args)</span> </span>&#123;</span><br><span class="line">	avoid_sleep();</span><br><span class="line">    <span class="keyword">int</span> *empty = args-&gt;empty,</span><br><span class="line">		*mutex = args-&gt;mutex,</span><br><span class="line">		*full = args-&gt;full,</span><br><span class="line">		id = args-&gt;id,</span><br><span class="line">		*con_mutex = args-&gt;con_mutex;</span><br><span class="line">    <span class="keyword">struct</span> FIFO32 *fifo = args-&gt;fifo;</span><br><span class="line">    <span class="keyword">struct</span> TASK *task = args-&gt;task;</span><br><span class="line">	<span class="keyword">int</span> tmp;</span><br><span class="line">	<span class="keyword">char</span> str[<span class="number">128</span>];</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">while</span> (task-&gt;cons == <span class="number">0</span>)</span><br><span class="line">			io_hlt();</span><br><span class="line">		sem_wait(full);</span><br><span class="line">		sem_wait(mutex);</span><br><span class="line">        tmp = fifo32_get(fifo);</span><br><span class="line">		sem_signal(mutex);</span><br><span class="line">		sem_signal(empty);</span><br><span class="line">		<span class="built_in">sprintf</span>(str, <span class="string">"cproc %d fetched %d\n"</span>, id, tmp);</span><br><span class="line">		sem_wait(con_mutex);</span><br><span class="line">		cons_putstr0(task-&gt;cons, str);</span><br><span class="line">		sem_signal(con_mutex);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* in HariMain */</span></span><br><span class="line"><span class="keyword">struct</span> SHEET *sout;</span><br><span class="line">sout = open_console(shtctl, memtotal);</span><br><span class="line">sheet_slide(sout, <span class="number">64</span>, <span class="number">4</span>);</span><br><span class="line">sheet_updown(sout, shtctl-&gt;top);</span><br><span class="line"><span class="comment">/* 进程创建参数 */</span></span><br><span class="line"><span class="keyword">struct</span> BBParg agp, agc1, agc2;</span><br><span class="line"><span class="keyword">int</span> buf[<span class="number">128</span>];</span><br><span class="line"><span class="keyword">struct</span> FIFO32 bbpfifo;</span><br><span class="line">fifo32_init(&amp;bbpfifo, <span class="number">8</span>, buf, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">struct</span> TASK *tskp, *tskc1, *tskc2;</span><br><span class="line"><span class="keyword">int</span> empty = <span class="number">8</span>, mutex = <span class="number">1</span>, full = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> con_mutex = <span class="number">1</span>;</span><br><span class="line">agp.empty = &amp;empty;</span><br><span class="line">agp.full = &amp;full;</span><br><span class="line">agp.mutex = &amp;mutex;</span><br><span class="line">agp.fifo = &amp;bbpfifo;</span><br><span class="line">agp.con_mutex = &amp;con_mutex;</span><br><span class="line">agc1 = agc2 = agp;</span><br><span class="line">agc1.id = <span class="number">1</span>;</span><br><span class="line">agc2.id = <span class="number">2</span>;</span><br><span class="line">agc1.task = key_win-&gt;task; <span class="comment">// 第一个consumer将在第一个console中进行输出</span></span><br><span class="line">agc2.task = sout-&gt;task;    <span class="comment">// 第二个consumer将在第二个console中进行输出</span></span><br><span class="line"><span class="comment">/* 创建进程 */</span></span><br><span class="line">tskp = create_task(memman, &amp;producer, (<span class="keyword">void</span>*)&amp;agp);</span><br><span class="line">tskc1 = create_task(memman, &amp;consumer, (<span class="keyword">void</span>*)&amp;agc1);</span><br><span class="line">tskc2 = create_task(memman, &amp;consumer, (<span class="keyword">void</span>*)&amp;agc2);</span><br><span class="line"><span class="comment">/* 运行进程 */</span></span><br><span class="line">task_run(tskp, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">task_run(tskc1, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">task_run(tskc2, <span class="number">2</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<img src="/2019/05/20/操作系统进程同步实验/image_88.png" alt="image_88.png" title>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/狗课/">狗课</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/&title=《操作系统进程同步实验》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/&title=《操作系统进程同步实验》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《操作系统进程同步实验》 — 莱士新闻网&url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/07/07/计网课程设计DNS服务器/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">计网课程设计DNS服务器</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/01/tournament/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">循环赛日程表问题报告</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/&title=《操作系统进程同步实验》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/&title=《操作系统进程同步实验》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《操作系统进程同步实验》 — 莱士新闻网&url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2019/05/20/操作系统进程同步实验/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQW7jMBAEQP//015gr0G03TOkkwVKJ8OwKZYO5KiHr1d8vf9e333z/nJ9/eXz97MRjl14eHh4o6k/3+b5m/xf3z2a9hHnjwYPDw/vHq8dLp9Evnk8b0LJQ8HDw8P7bbxkKU9K53zMze/x8PDw/kfeppie/RcPDw/vk7wkVmhDgbxQzuOPi1kLHh4eXsybRag/+/lifw8PDw9v0VVv21rtop+M9l5ceHh4eDd4ecyaxwQ5oD2Mle8CrzZFxsPDwyt5zy//bSTRLvd5pNvOBw8PD+8Gb7Psztj7FlpRvuPh4eFd4yWL+6bVlE+xLamjjQEPDw/vKG/2Yt8eC2gjjxlv2BjDw8PDu8Cbtbs2JfLs0RebFh4eHt6Cl8cE+dTzdtcsqijKdzw8PLxrvNlxq33Jmx9TyKMKPDw8vNu8dtHfTCWv6/O3geggFx4eHt5RXjLRdmNoS+e2rC/iDzw8PLwLvFlrPwl8Z039pFivG2Z4eHh4F3g3QtU24JiV5kW0gYeHh3eBN2uD5SFFfq8onC2LbDw8PLx7vHbotjWVbwlnR8bDw8M7NfIwGC2PWBXF7tkLDw8P7+PIGXsTyz5/HsbNeHh4eEd5s9f+ffGdTzo/iICHh4f3Gd6sIp0FE8nD2hxKaLcQPDw8vBlvszG0AesmwB3OAQ8PD+8jvLaYnh0wbQOLWcmOh4eHd4P3mcj11AGCTdGPh4eHd4r3Lq981W0xeURbjImHh4d3gTfrE7WNsX0sm+xvq+NceHh4eCUvv/GNtlZ7NKEOLPDw8PCu8fKX/CRoSB5EWzq3mxYeHh7eb+Bt4te2rdU2zw5sDHh4eHjXePnGMBuz3Tz+8T0eHh7eNV4eRuQLdNsS28+hPkCAh4eHN+K1DbD2SMGmldVuDAf6e3h4eHhPd/8D9l3uAwDt3gcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

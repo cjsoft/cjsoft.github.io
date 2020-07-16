@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/04/30/简单凸包求法/">
+    
+    
+    <title>简单凸包求法 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,算法,计算几何">
+    <meta name="description" content="首先，求极角需要注意，为了方便，当atan2值小于0时，atan2值加上2π作为极角大小，这样做对于下面的做法来说是比较方便的  
+
+1234567inline double atan3(double a,double b )&amp;#123;    double t=atan2(a,b);    if(t&amp;lt;0)&amp;#123;        t+=2*M_PI;    &amp;#125;    retur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单凸包求法">
+<meta property="og:url" content="http://cjsoft.github.io/2016/04/30/简单凸包求法/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="首先，求极角需要注意，为了方便，当atan2值小于0时，atan2值加上2π作为极角大小，这样做对于下面的做法来说是比较方便的  
+
+1234567inline double atan3(double a,double b )&amp;#123;    double t=atan2(a,b);    if(t&amp;lt;0)&amp;#123;        t+=2*M_PI;    &amp;#125;    retur">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单凸包求法">
+<meta name="twitter:description" content="首先，求极角需要注意，为了方便，当atan2值小于0时，atan2值加上2π作为极角大小，这样做对于下面的做法来说是比较方便的  
+
+1234567inline double atan3(double a,double b )&amp;#123;    double t=atan2(a,b);    if(t&amp;lt;0)&amp;#123;        t+=2*M_PI;    &amp;#125;    retur">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">简单凸包求法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">简单凸包求法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-30T15:59:54.000Z" itemprop="datePublished" class="page-time">
+  2016-04-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/计算几何/">计算几何</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-简单凸包求法"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">简单凸包求法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年04月30日 15:59" datetime="2016-04-30T15:59:54.000Z"  itemprop="datePublished">2016-04-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/计算几何/">计算几何</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>首先，求极角需要注意，<br>为了方便，当atan2值小于0时，atan2值加上2π作为极角大小，这样做对于下面的做法来说是比较方便的  </p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">atan3</span><span class="params">(<span class="keyword">double</span> a,<span class="keyword">double</span> b )</span></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> t=<span class="built_in">atan2</span>(a,b);</span><br><span class="line">    <span class="keyword">if</span>(t&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        t+=<span class="number">2</span>*M_PI;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>选取最下方的最左侧的点作为凸包初始点，将其他的点按照与这个点的连线极角大小进行排序。建议以极角作为第一关键字，距这个点的欧氏距离作为第二逆序关键字，这样我们会减轻接下来去重工作的负担。  </li>
+<li>按极角顺序遍历除初始点以外的所有点，若有极角相同的点，保留与初始点距离最大的那一个。由于1中我们有第二关键字，所以这里保留极角相同的第一个点即可。（注意如果是原址删除多余点的话，注意删除多余点之后点的顺序可能发生变化。其实这个问题和凸包本身没什么关系，只是自己手残写残，没有发现这个问题而已）  </li>
+<li>将初始点和极角最小的角压入凸包栈中。同时向偏角栈中压入0和极角最小角的极角（这个都压0也可以）  </li>
+<li>按极角顺序遍历剩余的所有点，对他们进行以下操作：  <ol>
+<li><strong>循环进行这个操作</strong>计算当前点与凸包栈栈顶元素连线的极角大小，如果这个值小于偏角栈栈顶元素，说明凸包栈栈顶的点是多余的，因为沿凸包边逆时针走，每次都不会向右转，如果偏角先大后小，说明向右转了，我们就需要把向右转的点和它对应的偏角弹出。当这个操作不能进行后，继续。  </li>
+<li>将当前点和当前点与凸包栈栈顶元素连线的极角大小分别压入凸包栈和偏角栈中。  </li>
+</ol>
+</li>
+<li>你已经得到了按顺序排列在凸包栈中的凸包边上的所有点了，凸包得求。   </li>
+</ol>
+<p>PS:  </p>
+<blockquote>
+<p>好像只有我一个人傻乎乎的用atan来求极角，别人都是用叉积来算的。  </p>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算几何/">计算几何</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/简单凸包求法/&title=《简单凸包求法》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/简单凸包求法/&title=《简单凸包求法》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/简单凸包求法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《简单凸包求法》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/简单凸包求法/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/简单凸包求法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/30/并查集/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">并查集</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/30/tarjan求割点和桥/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tarjan求割点和桥</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/简单凸包求法/&title=《简单凸包求法》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/简单凸包求法/&title=《简单凸包求法》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/简单凸包求法/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《简单凸包求法》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/简单凸包求法/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/简单凸包求法/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aQXKDMAwFUO5/aXqAFOdLLp1BPK8yAYwfC40l6zjicX6Mz6v5/cmzxx0DAwPjsYxzOT7vSZaSzH81w9V7v3waDAyMFzDWi7v6vV70+hOsl5uvDQMDAyNh5K/P2RgYGBj7jF64rG5AMTAwMKpJbK+4Vk19b8/FMTAwHsjIN3D///uW8w0MDIxHMc7iqAbcPHznQfaXOTEwMEYz8gC3s8TqQWZvPRgYGFMZvVf2wmg1QBdgGBgYoxlRPC6WyfJPs55z5zNhYGBMZeTNW9UmiTtCdjnUYmBgPJzRbG74o+aJ6vFkVG7DwMAYxOglkPmBQS82lufHwMAYzagmjXcX4/LAfQnDwMAYysgXtJ+y5oE4P0DFwMCYzSjE4zg0V5PefIYvWTgGBsZoRp7c5ollL8j2PisGBsYbGL3SfHXpvavRBhQDA2M0I38g2bRVn02uNntGMDAwBjHWQTZvvEjmycN6FY+BgTGbUT28rKapzT613nsxMDBewOgB9lvBqtvByxViYGC8htErge20iO3cuVUFxMDAeCAjae3aSjJbwT3fwmJgYExlnMWRF9F2jkWrLbMYGBizGdUDzuqmLd8s3pHuYmBgTGIkITKZbicoVxNaDAyMdzIKJfjiPzlv54ABAwMDY78Yt7MpPKo+DAwMjOAIcyeM9opxGBgYb2D8VdtEL1j3GjIwMDDew+iljnmZLL+nd/CAgYExmvED+Tz6CCN9FJ0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

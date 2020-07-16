@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/05/17/智障数组/">
+    
+    
+    <title>智障数组 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="动态">
+    <meta name="description" content="mdzz，get_height总是越界，试图访问sa -1的位置，看了之前写的AC代码，发现getsa传入的字符串长度比正常的字符串长度长1。最后想半天，想起来是为了使有效的sa从sa[1]开始，所以我们在字符串后面插入一个比所有元素都要小的元素0。
+mdzz药丸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智障数组">
+<meta property="og:url" content="http://cjsoft.github.io/2016/05/17/智障数组/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="mdzz，get_height总是越界，试图访问sa -1的位置，看了之前写的AC代码，发现getsa传入的字符串长度比正常的字符串长度长1。最后想半天，想起来是为了使有效的sa从sa[1]开始，所以我们在字符串后面插入一个比所有元素都要小的元素0。
+mdzz药丸">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.756Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="智障数组">
+<meta name="twitter:description" content="mdzz，get_height总是越界，试图访问sa -1的位置，看了之前写的AC代码，发现getsa传入的字符串长度比正常的字符串长度长1。最后想半天，想起来是为了使有效的sa从sa[1]开始，所以我们在字符串后面插入一个比所有元素都要小的元素0。
+mdzz药丸">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">智障数组</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">智障数组</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-17T02:10:38.000Z" itemprop="datePublished" class="page-time">
+  2016-05-17
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-智障数组"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">智障数组</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年05月17日 2:10" datetime="2016-05-17T02:10:38.000Z"  itemprop="datePublished">2016-05-17</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>mdzz，get_height总是越界，试图访问sa -1的位置，看了之前写的AC代码，发现getsa传入的字符串长度比正常的字符串长度长1。最后想半天，想起来是为了使有效的sa从sa[1]开始，所以我们在字符串后面插入一个比所有元素都要小的元素0。</p>
+<p>mdzz药丸</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态/">动态</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/17/智障数组/&title=《智障数组》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/17/智障数组/&title=《智障数组》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/17/智障数组/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《智障数组》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/17/智障数组/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/17/智障数组/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/18/lps最长回文子串/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">lps最长回文子串</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/07/朝圣之旅/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">朝圣之旅</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/17/智障数组/&title=《智障数组》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/17/智障数组/&title=《智障数组》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/17/智障数组/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《智障数组》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/17/智障数组/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/17/智障数组/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACPElEQVR42u3ay27DMAxEUf3/T7tAV+1C9szQKSryehU4ja2jAgQfWku+ru/r5+fdnd23u9/u/mZ94oIBA8axjOv2ul+K8ltlcdm7YMCAMY2hP/r+jo5xt+9hzTBgwICxC3ObBSn39YALAwYMGG7A1ZM/JcV0wTBgwJjMUFK0rLitU1+uxWHAgHEgIxsM/M3nj883YMCA8e8ZV+FS0kQl+OoD0e0zYcCA0ZqhtNKy5prevNOf9rBCGDBgDGBkLbCsDedukLJyGDBgdGW4zbK3DmS4aaX9f4ABA0Yjhtu/qjDqYd0O5TBgwGjE0MeKLw8Uy3XoyqajMGDAaMfI2mp6UpgVvdvBAAwYMFozlEa8XlLqW5MdxYABA8ZMRnZIQuG5iaYe9O0ZKQwYMA5kKAFOX6jehnNHmw9bAwMGjNaMys+yA2FuWWscC4MBA0ZrhvuaSgr4QrEKAwaMYYz7heoDS6XQzYK4NBiAAQNGa4bbYqvHuso44WGDYMCAMYDhBln7NVHrzdgaGDBgjGHoTTc3cdQPmbnPhwEDxhxGpZjUh6DuRhgkGDBgtGaE7S2hENVDsDtSDb+GAQPGgYxKEMwGAMp2KO/9dQcGDBitGZUwp4dLN+C66SYMGDAmMNwgqyeF+qEx9yjGyqI7DBgwDmforTQ94Gbh2C2kYcCAASNbkD6qdAeZLwdcGDBgtGNkCV+WYroHyGDAgDGB4R56cJtr2bRRH0LAgAGjN8MdDLhjSGXLspFAab4BAwaMMxhfuBKodk7rXvMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

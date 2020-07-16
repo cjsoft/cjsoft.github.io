@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/05/18/斜率优化dp/">
+    
+    
+    <title>斜率优化dp | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,动态规划,算法">
+    <meta name="description" content="LNWC上其实讲过斜率优化，但是那阵子颓的不行，都没听懂。今天学习了一下DP的斜率优化。斜率优化通常用来优化具有一下性质的DP问题：
+
+将一段序列划分为多段连续区间
+DP方程中有形如$A_iB_j$的项。（例如$S_iS_j$）
+
+设从状态$j$转移到状态$i$时$Dp_i = f(j)$，最佳方案取最小值（最大值同理），有$k \leq j \leq i$，若向状态$i$转移，$j$不比$k$差">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斜率优化dp">
+<meta property="og:url" content="http://cjsoft.github.io/2016/05/18/斜率优化dp/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="LNWC上其实讲过斜率优化，但是那阵子颓的不行，都没听懂。今天学习了一下DP的斜率优化。斜率优化通常用来优化具有一下性质的DP问题：
+
+将一段序列划分为多段连续区间
+DP方程中有形如$A_iB_j$的项。（例如$S_iS_j$）
+
+设从状态$j$转移到状态$i$时$Dp_i = f(j)$，最佳方案取最小值（最大值同理），有$k \leq j \leq i$，若向状态$i$转移，$j$不比$k$差">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.756Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="斜率优化dp">
+<meta name="twitter:description" content="LNWC上其实讲过斜率优化，但是那阵子颓的不行，都没听懂。今天学习了一下DP的斜率优化。斜率优化通常用来优化具有一下性质的DP问题：
+
+将一段序列划分为多段连续区间
+DP方程中有形如$A_iB_j$的项。（例如$S_iS_j$）
+
+设从状态$j$转移到状态$i$时$Dp_i = f(j)$，最佳方案取最小值（最大值同理），有$k \leq j \leq i$，若向状态$i$转移，$j$不比$k$差">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">斜率优化dp</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">斜率优化dp</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-18T13:02:47.000Z" itemprop="datePublished" class="page-time">
+  2016-05-18
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-斜率优化dp"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">斜率优化dp</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年05月18日 13:02" datetime="2016-05-18T13:02:47.000Z"  itemprop="datePublished">2016-05-18</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>LNWC上其实讲过斜率优化，但是那阵子颓的不行，都没听懂。今天学习了一下DP的斜率优化。<br>斜率优化通常用来优化具有一下性质的DP问题：</p>
+<ol>
+<li>将一段序列划分为多段连续区间</li>
+<li>DP方程中有形如$A_iB_j$的项。（例如$S_iS_j$）</li>
+</ol>
+<p>设从状态$j$转移到状态$i$时$Dp_i = f(j)$，最佳方案取最小值（最大值同理），有$k \leq j \leq i$，若向状态$i$转移，$j$不比$k$差，则有$f(j) \leq f(k)$，移项，有形如$\frac{y_j - y_k}{x_j - x_k} \leq A_i$的不等式，这是$j$不比$k$差的必要条件。</p>
+<p>我们再设$g(p, q) = \frac{y_p - y_q}{x_p - x_q}$，若$g(i, j) \leq g(j, k)$，我们可以直接丢掉状态$j$，原因如下：</p>
+<blockquote>
+<p>若$g(i, j) \leq A_i$，则$i$不比$j$差。<br>若$g(i, j) &gt; A_i$，可知$g(j, k) &gt; A_i$，$k$也不比$j$差<br>由此可见，若$g(i, j) \leq g(j, k)$，状态$j$永远不会成为更优的状态，所以可以直接丢掉</p>
+</blockquote>
+<p>需要证明的东西只有以上内容，下面简述一下流程。<br>首先我们搞一个双端队列来维护一个状态序列，这个序列当中，每三个位置元素$a, b, c$，都保证$g(c, b) &gt; g(b, a)$。</p>
+<p>将第一个状态的DP转移来源压入队列。<br>从$1 \ldots n$循环扫描（不一定从$1$开始），做如下四步：</p>
+<ol>
+<li>当队列中队首往后的一个状态不比队首状态差时，弹出队首元素，直到队首状态比其后第一个状态更优为止。</li>
+<li>用队首状态去更新当前状态。</li>
+<li>考虑当前状态$i$，设队尾状态为$j$，队尾前一个状态为$k$，当$g(i, j) \leq g(j, k)$时，弹出队尾状态，直到$g(i, j) &gt; g(j, k)$为止。</li>
+<li>将当前状态压入队尾</li>
+</ol>
+<p>个人感觉如果确定这道题可以用斜率优化DP，那么剩下的就是套路了，先推$g(p, q)$，然后按照流程来就可以了</p>
+<p>代码如下<br><a href="https://github.com/cjsoft/noip/tree/master/after_lnoi/d0518" target="_blank" rel="external">https://github.com/cjsoft/noip/tree/master/after_lnoi/d0518</a><br><code>hdu2507.copy.cpp</code>是自己徒手重写的<br><code>hdu2829.cpp</code>是自己推外加参考资料写出来的</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/18/斜率优化dp/&title=《斜率优化dp》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/18/斜率优化dp/&title=《斜率优化dp》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/18/斜率优化dp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《斜率优化dp》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/18/斜率优化dp/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/18/斜率优化dp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/20/单调队列dp/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">单调队列dp</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/18/lps最长回文子串/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">lps最长回文子串</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/18/斜率优化dp/&title=《斜率优化dp》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/18/斜率优化dp/&title=《斜率优化dp》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/18/斜率优化dp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《斜率优化dp》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/18/斜率优化dp/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/18/斜率优化dp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS44bMQwE0Ln/pZ0DJG5XUZoAll6vDKN/rxeEqOLPT3y8/jry85Mzn//ZdmBgYHwt4/V4vHutFdjzqz8/5e0TMTAwLmA8l8J3v3eV2ufPl5RpDAwMjPbVn4t1ey0GBgbGjJEvKJOrEhIGBgZG+0K7GtR2ybihF8fAwPhCRr7r/v9//0q+gYGB8VWMV3msxAkrkcOH+2BgYBzNyAtcvixrw8iVUAEDA+MGxu+1r22xTorvhoEwDAyML2ckm+95MW1fKym+b++DgYFxASPZlE/qWz5s0UaeH5ahGBgYRzNmAUDOXtlcW2qnMTAwjmbkw1sb9vniAYv2WRgYGCcxZtv9s+GtHF+3vhgYGBcwkg2vNjxoi/JSY4yBgXEBI29c2zBytkxsn4WBgXE2I9lk3zVIkY+RtfEABgbG2YzkhWbjF/nn2Lw0xMDAOI4xK6C7NunyEHSYZmBgYBzByJvYlUGu/BPkwxkYGBj3MFZKatugJmMcs4ATAwPjNkY7TrE3pMyb4X+ciYGBcQEjDyZzTNvutvccZp4YGBhfzpg1scXe3ihUiJaVGBgYhzJe5TF7TBshJFt7H8JLDAyMgxhtcWwXbSvtbj1sgYGBcTQjKZF5a5o0vUkIWselGBgYFzBmha8tyutTbEUwgIGBcTFj9uD8QwzbVAwMDIwymGxHvtqA80O+gYGBcSgjH6SYxZztQEbS3GJgYNzDmK278k239ava1SAGBsZBjD9DOUHPhDtb7QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

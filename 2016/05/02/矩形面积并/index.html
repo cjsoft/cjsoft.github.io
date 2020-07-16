@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/05/02/矩形面积并/">
+    
+    
+    <title>矩形面积并 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,扫描线,数据结构,算法,线段树,计算几何">
+    <meta name="description" content="得从大上个po开始说。我不是根据矩形周长的AC代码了解了扫描线的思想么，然后我就开始根据矩形并周长的做法来yy矩形面积并的做法。事实上，我第一次yy出来的代码已经是正确的能够AC的了，然而因为http://wallacenews.tk/2016/05/01/囧/上所提到的原因，我没有AC。于是yy的代码被窝删掉了。然后我又照着AC的代码撸半天结果WA，好，最后发现是poj的锅。^&amp;amp;%&amp;am">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩形面积并">
+<meta property="og:url" content="http://cjsoft.github.io/2016/05/02/矩形面积并/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="得从大上个po开始说。我不是根据矩形周长的AC代码了解了扫描线的思想么，然后我就开始根据矩形并周长的做法来yy矩形面积并的做法。事实上，我第一次yy出来的代码已经是正确的能够AC的了，然而因为http://wallacenews.tk/2016/05/01/囧/上所提到的原因，我没有AC。于是yy的代码被窝删掉了。然后我又照着AC的代码撸半天结果WA，好，最后发现是poj的锅。^&amp;amp;%&amp;am">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="矩形面积并">
+<meta name="twitter:description" content="得从大上个po开始说。我不是根据矩形周长的AC代码了解了扫描线的思想么，然后我就开始根据矩形并周长的做法来yy矩形面积并的做法。事实上，我第一次yy出来的代码已经是正确的能够AC的了，然而因为http://wallacenews.tk/2016/05/01/囧/上所提到的原因，我没有AC。于是yy的代码被窝删掉了。然后我又照着AC的代码撸半天结果WA，好，最后发现是poj的锅。^&amp;amp;%&amp;am">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">矩形面积并</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">矩形面积并</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-02T00:27:02.000Z" itemprop="datePublished" class="page-time">
+  2016-05-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-矩形面积并"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">矩形面积并</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年05月02日 0:27" datetime="2016-05-02T00:27:02.000Z"  itemprop="datePublished">2016-05-02</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>得从大上个po开始说。<br>我不是根据矩形周长的AC代码了解了扫描线的思想么，然后我就开始根据矩形并周长的做法来yy矩形面积并的做法。事实上，我第一次yy出来的代码已经是正确的能够AC的了，然而因为<a href="http://wallacenews.tk/2016/05/01/囧/" target="_blank" rel="external">http://wallacenews.tk/2016/05/01/囧/</a>上所提到的原因，我没有AC。于是yy的代码被窝删掉了。然后我又照着AC的代码撸半天结果WA，好，最后发现是poj的锅。<br>^&amp;%&amp;&amp;*&amp;GUGUT756rygu日了狗了！<br>今天早上重新写了昨天自己yy的方法，提交，AC，日狗</p>
+<p>贴yy的代码<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> lson(x) (x &lt;&lt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> rson(x) (x &lt;&lt; <span class="number">1</span> | <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> mid(l, r) ((l + r) &gt;&gt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MXN <span class="number">207</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">struct</span> seg &#123;</span><br><span class="line">    <span class="keyword">double</span> x1, x2;</span><br><span class="line">    <span class="keyword">int</span> atag;</span><br><span class="line">    <span class="keyword">double</span> y;</span><br><span class="line">    <span class="keyword">int</span> lx1, lx2;</span><br><span class="line">    seg() &#123;x1 = x2 = y = atag = <span class="number">0</span>;&#125;</span><br><span class="line">    seg(<span class="keyword">double</span> a, <span class="keyword">double</span> b, <span class="keyword">double</span> c, <span class="keyword">int</span> d):x1(a),x2(b),y(c),atag(d) &#123;&#125;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> seg &amp;b) <span class="keyword">const</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> y == b.y ? atag &gt; b.atag : y &lt; b.y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; ss[MXN];</span><br><span class="line"><span class="keyword">int</span> cnt[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">int</span> ll[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>], rr[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">double</span> stree[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">double</span> prefix[MXN], loc[MXN];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (cnt[root]) &#123;</span><br><span class="line">        stree[root] = loc[r] - loc[l - <span class="number">1</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">        stree[root] = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        stree[root] = stree[lson(root)] + stree[rson(root)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">adddata</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> al, <span class="keyword">int</span> ar, <span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt; ar || r &lt; al) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= al &amp;&amp; r &lt;= ar) &#123;</span><br><span class="line">        cnt[root] += data;</span><br><span class="line">        pushup(root, l, r);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    adddata(lson(root), l, mid(l, r), al, ar, data);</span><br><span class="line">    adddata(rson(root), mid(l, r) + <span class="number">1</span>, r, al, ar, data);</span><br><span class="line">    pushup(root, l, r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> a, b, c, d;</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">0</span>, cur = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf %lf %lf %lf"</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span><br><span class="line">            ss[m++] = seg(a, c, b, <span class="number">1</span>);</span><br><span class="line">            ss[m++] = seg(a, c, d, -<span class="number">1</span>);</span><br><span class="line">            loc[cur++] = a; loc[cur++] = c;</span><br><span class="line">        &#125;</span><br><span class="line">        sort(loc, loc + cur);</span><br><span class="line">        <span class="keyword">int</span> sz = unique(loc, loc + cur) - loc;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sz; ++i) &#123;</span><br><span class="line">            prefix[i + <span class="number">1</span>] = loc[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            ss[i].lx1 = lower_bound(loc, loc + sz, ss[i].x1) - loc + <span class="number">1</span>;</span><br><span class="line">            ss[i].lx2 = lower_bound(loc, loc + sz, ss[i].x2) - loc + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        sort(ss, ss + m);</span><br><span class="line">        <span class="keyword">double</span> last = <span class="number">0</span>, resu = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            adddata(<span class="number">1</span>, <span class="number">1</span>, sz, ss[i].lx1, ss[i].lx2 - <span class="number">1</span>, ss[i].atag);</span><br><span class="line">            <span class="keyword">if</span> (i != m - <span class="number">1</span>) resu += <span class="built_in">fabs</span>(stree[<span class="number">1</span>]) * (ss[i + <span class="number">1</span>].y - ss[i].y);</span><br><span class="line">            last = stree[<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Test case #%d\nTotal explored area: %.2lf\n\n"</span>, t++, resu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里处理线段的方法是将离散后的右端减去1，这样一个节点[l, r]所表示的区间就是[rev(l), rev(r + 1)]，<br>也就是说叶子节点i表示的是一个单位线段从[rev(i), rev(i + 1)]。</p>
+<p>贴上照着别人的代码撸出来的代码<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> lson(x) (x &lt;&lt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> rson(x) (x &lt;&lt; <span class="number">1</span> | <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> mid(l, r) ((l + r) &gt;&gt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MXN <span class="number">207</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">struct</span> seg &#123;</span><br><span class="line">    <span class="keyword">double</span> x1, x2;</span><br><span class="line">    <span class="keyword">int</span> atag;</span><br><span class="line">    <span class="keyword">double</span> y;</span><br><span class="line">    <span class="keyword">int</span> lx1, lx2;</span><br><span class="line">    seg() &#123;x1 = x2 = y = atag = <span class="number">0</span>;&#125;</span><br><span class="line">    seg(<span class="keyword">double</span> a, <span class="keyword">double</span> b, <span class="keyword">double</span> c, <span class="keyword">int</span> d):x1(a),x2(b),y(c),atag(d) &#123;&#125;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> seg &amp;b) <span class="keyword">const</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> y == b.y ? atag &gt; b.atag : y &lt; b.y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; ss[MXN];</span><br><span class="line"><span class="keyword">int</span> cnt[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">int</span> ll[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>], rr[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">double</span> stree[MXN &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">double</span> prefix[MXN], loc[MXN];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    stree[root] = cnt[root] = <span class="number">0</span>;</span><br><span class="line">    ll[root] = l;</span><br><span class="line">    rr[root] = r;</span><br><span class="line">    <span class="keyword">if</span> (l + <span class="number">1</span> == r) <span class="keyword">return</span>;</span><br><span class="line">    build(lson(root), l, mid(l, r));</span><br><span class="line">    build(rson(root), mid(l, r), r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (cnt[root]) &#123;</span><br><span class="line">        stree[root] = prefix[rr[root]] - prefix[ll[root]];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ll[root] + <span class="number">1</span> == rr[root]) &#123;</span><br><span class="line">        stree[root] = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        stree[root] = stree[lson(root)] + stree[rson(root)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">adddata</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (ll[root] == l &amp;&amp; rr[root] == r) &#123;</span><br><span class="line">        cnt[root] += data;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (r &lt;= mid(ll[root], rr[root])) &#123;</span><br><span class="line">        adddata(lson(root), l, r, data);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (l &gt;= mid(ll[root], rr[root])) &#123;</span><br><span class="line">        adddata(rson(root), l, r, data);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        adddata(lson(root), l, mid(ll[root], rr[root]), data);</span><br><span class="line">        adddata(rson(root), mid(ll[root], rr[root]), r, data);</span><br><span class="line">    &#125;</span><br><span class="line">    pushup(root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> a, b, c, d;</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">0</span>, cur = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%lf %lf %lf %lf"</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span><br><span class="line">            ss[m++] = seg(a, c, b, <span class="number">1</span>);</span><br><span class="line">            ss[m++] = seg(a, c, d, -<span class="number">1</span>);</span><br><span class="line">            loc[cur++] = a; loc[cur++] = c;</span><br><span class="line">        &#125;</span><br><span class="line">        sort(loc, loc + cur);</span><br><span class="line">        <span class="keyword">int</span> sz = unique(loc, loc + cur) - loc;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sz; ++i) &#123;</span><br><span class="line">            prefix[i + <span class="number">1</span>] = loc[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            ss[i].lx1 = lower_bound(loc, loc + sz, ss[i].x1) - loc + <span class="number">1</span>;</span><br><span class="line">            ss[i].lx2 = lower_bound(loc, loc + sz, ss[i].x2) - loc + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        build(<span class="number">1</span>, <span class="number">1</span>, sz);</span><br><span class="line">        sort(ss, ss + m);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= sz; ++i) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">double</span> last = <span class="number">0</span>, resu = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            adddata(<span class="number">1</span>, ss[i].lx1, ss[i].lx2, ss[i].atag);</span><br><span class="line">            <span class="keyword">if</span> (i != m - <span class="number">1</span>) resu += <span class="built_in">fabs</span>(stree[<span class="number">1</span>]) * (ss[i + <span class="number">1</span>].y - ss[i].y);</span><br><span class="line">            last = stree[<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Test case #%d\nTotal explored area: %.2lf\n\n"</span>, t++, resu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里表示线段的方法是[l, r]表示[rev(l), rev(r)]，需要注意的是判断叶子节点的方法从<code>l == r</code>变成了<code>l + 1 == r</code>，判断是否包含区间的方式也发生了变化，为<code>l == ll[root] &amp;&amp; r = rr[root]</code>，除此之外每个节点的左右界最好在最开始的时候通过build的方式算出来。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/扫描线/">扫描线</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线段树/">线段树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算几何/">计算几何</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/02/矩形面积并/&title=《矩形面积并》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/02/矩形面积并/&title=《矩形面积并》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/02/矩形面积并/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《矩形面积并》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/02/矩形面积并/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/02/矩形面积并/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/02/24OI文化衫/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">24OI文化衫</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/01/囧/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">囧</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/02/矩形面积并/&title=《矩形面积并》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/02/矩形面积并/&title=《矩形面积并》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/02/矩形面积并/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《矩形面积并》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/02/矩形面积并/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/02/矩形面积并/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3awW7rMAwEwP7/T+ddC7Sxdym/ApFGp8JJHY0OBEnx6yter2/r+snPT78/f/fm6yePLQwMjI9lvC7Xu01f/++7bV2/P/n+26PBwMA4gHEdCpOwmGxlhXezZwwMDIxyE0kIboMvBgYGRs5IAuhKGYyBgYGxUsTOCtrrbybH93AtjoGB8YGMvOv+93//l/sNDAyMj2K8ypWnekmAvi6Pi11hYGBszcgDXFtetsllm/ZhYGCcw0heN2u0tWVq3oCrO3kYGBgbMfLhiTxEtgeUh/ibDBcDA2M7xsqlY35tkITjtvTFwMA4gbGSZbVhN2+c5UeAgYFxJqMlJSXorG332A0tBgbGFozZzxftsNGv1KEZAwPjGEYeRleuM+uiNClxMTAwtmasXAMkA2Trm66rcAwMjI0Ys0GHNoDmzf28zVdEYgwMjA9n5C2tNjgm759djt5kuBgYGAcw2i22VwtJAto28jAwME5gJE20thmXJH8rSScGBsZpjHYUbL1+fGosDAMDA6OlzkLtbLDsl08xMDAOYLQtsJXhjFlLLkoNMTAwtmasDH7NnrettJvBDgwMjE0Zr3K1CVxbmrZJ5I0PAwNjC8azl5Gzq4VnhzMwMDB2ZeRBtk31kgI4b+3dvB8DA+MAxqwNlwfQGak4OAwMDIw4+OZXC8824zAwMDDarc/6YCvNOAwMjBMY6yMUT42LzYY8MDAw9mbMAuKs6Z+XtethGgMDYwvGPxwDk2F6S6c2AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

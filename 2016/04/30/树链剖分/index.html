@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/04/30/树链剖分/">
+    
+    
+    <title>树链剖分小结 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,图论,算法">
+    <meta name="description" content="一句话，通过一种略微有些贪心思想的hash方法，把树上节点散列到一段连续区间上。通过某个节点的SCC（为该节点后代节点个数 + 1）值来确定他父亲的大胖儿子，连续的大胖儿子在散列区间上是连续的，在处理连续大胖儿子的维护上，我们可以用其他数据结构例如BIT或者ST或者SegTree这种工具来加速我们对树上信息的维护过程。
+
+一些名词SCC:该节点后代节点个数 + 1大胖儿子:某节点SCC最大的儿子就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树链剖分小结">
+<meta property="og:url" content="http://cjsoft.github.io/2016/04/30/树链剖分/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="一句话，通过一种略微有些贪心思想的hash方法，把树上节点散列到一段连续区间上。通过某个节点的SCC（为该节点后代节点个数 + 1）值来确定他父亲的大胖儿子，连续的大胖儿子在散列区间上是连续的，在处理连续大胖儿子的维护上，我们可以用其他数据结构例如BIT或者ST或者SegTree这种工具来加速我们对树上信息的维护过程。
+
+一些名词SCC:该节点后代节点个数 + 1大胖儿子:某节点SCC最大的儿子就">
+<meta property="og:image" content="http://7xlxce.com1.z0.glb.clouddn.com/15-11-21/88346935.jpg">
+<meta property="og:image" content="http://7xlxce.com1.z0.glb.clouddn.com/15-11-21/32603265.jpg">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.760Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树链剖分小结">
+<meta name="twitter:description" content="一句话，通过一种略微有些贪心思想的hash方法，把树上节点散列到一段连续区间上。通过某个节点的SCC（为该节点后代节点个数 + 1）值来确定他父亲的大胖儿子，连续的大胖儿子在散列区间上是连续的，在处理连续大胖儿子的维护上，我们可以用其他数据结构例如BIT或者ST或者SegTree这种工具来加速我们对树上信息的维护过程。
+
+一些名词SCC:该节点后代节点个数 + 1大胖儿子:某节点SCC最大的儿子就">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">树链剖分小结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">树链剖分小结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-04-30T15:59:57.000Z" itemprop="datePublished" class="page-time">
+  2016-04-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/图论/">图论</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一些名词"><span class="post-toc-number">1.</span> <span class="post-toc-text">一些名词</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一些重要性质"><span class="post-toc-number">2.</span> <span class="post-toc-text">一些重要性质</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正文"><span class="post-toc-number">3.</span> <span class="post-toc-text">正文</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-精髓的前二分之一"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1. 精髓的前二分之一</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-精髓的后二分之一"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2. 精髓的后二分之一</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#如何合并重链？"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">如何合并重链？</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#附录"><span class="post-toc-number">4.</span> <span class="post-toc-text">附录</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-树链剖分"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">树链剖分小结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年04月30日 15:59" datetime="2016-04-30T15:59:57.000Z"  itemprop="datePublished">2016-04-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/图论/">图论</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>一句话，通过一种略微有些贪心思想的hash方法，把树上节点散列到一段连续区间上。<br>通过某个节点的SCC（为该节点后代节点个数 + 1）值来确定他父亲的大胖儿子，连续的大胖儿子在散列区间上是连续的，在处理连续大胖儿子的维护上，我们可以用其他数据结构例如BIT或者ST或者SegTree这种工具来加速我们对树上信息的维护过程。</p>
+</blockquote>
+<h3 id="一些名词"><a href="#一些名词" class="headerlink" title="一些名词"></a>一些名词</h3><p><strong>SCC</strong>:该节点后代节点个数 + 1<br><strong>大胖儿子</strong>:某节点SCC最大的儿子就是他的大胖儿子<br><strong>小瘦儿子</strong>:某节点SCC不是最大的儿子就是他的小瘦儿子。换言之，这个节点的儿子除了大胖儿子之外，其他所有儿子都是小瘦儿子<br><strong>深度</strong>:不解释<br><strong>爸爸</strong>:不解释<br><strong>重链</strong>：相互之间深度连续的且具有亲缘关系的大胖儿子（就是每个节点都是大胖儿子并且深度各不相同的连续的链）<br><strong>轻链</strong>：不是重链的链，这里探讨它的意义不大，因为轻链的长度最多不会超过两个节点<br><strong>散列值</strong>:某个节点在被散列到的连续区间上的位置<br><strong>反向散列值</strong>:某个散列值所对应的原节点（的节点号）<em>不是必须的</em><br><strong>重链头</strong>：某条重链中深度最小的大胖儿子  </p>
+<h3 id="一些重要性质"><a href="#一些重要性质" class="headerlink" title="一些重要性质"></a>一些重要性质</h3><ol>
+<li>由定义得一个节点的大胖儿子只有一个  </li>
+<li>一条重链只会有一个重链头<br><br><br></li>
+</ol>
+<hr>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><hr>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xlxce.com1.z0.glb.clouddn.com/15-11-21/88346935.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>  
+<h4 id="1-精髓的前二分之一"><a href="#1-精髓的前二分之一" class="headerlink" title="1. 精髓的前二分之一"></a>1. 精髓的前二分之一</h4><ol>
+<li>首先，我们要知道所有节点的<strong>SCC</strong>、<strong>大胖儿子</strong>、<strong>深度</strong>、<strong>爸爸</strong>都是啥，这个通过一次dfs可以搞出来。为了同我写过的代码风格一致，建议使老祖宗也就是根节点的爸爸为0而不是他自己。<br><em>代码见下文<a href="#附录">附录</a>的dfs_1</em>  </li>
+<li>通过第二次dfs算出每个节点的散列值和反向散列值，以及重链头。<ol>
+<li>为当前节点分配散列值，并保存反向散列值。顺序增加就好（就是1、2、3、4…）  </li>
+<li>对儿子们进行dfs，<strong>注意，一定要优先对大胖儿子进行dfs</strong>，大胖儿子的重链头就是他爸爸的重链头。剩下的小瘦儿子dfs顺序随意，他们的重链头是他们自己  </li>
+</ol>
+</li>
+</ol>
+<p><strong>树剖的精髓的二分之一已经学会了！、</strong>  </p>
+<p>然后利用散列值或者反向散列值乱搞（例如对线段钩进行初始化建钩操作 <em>雾</em>）  </p>
+<hr>
+<h4 id="2-精髓的后二分之一"><a href="#2-精髓的后二分之一" class="headerlink" title="2. 精髓的后二分之一"></a>2. 精髓的后二分之一</h4><p>树剖的另一半精髓是树上操作和查询的快速乱搞，大概的核心思想是利用重链在散列区间上的连续特性进行加速优化  </p>
+<p><strong>例如</strong>，给定一棵树，求任意两点间节点（包括这两个点）的权值和<br>我们就可以在处理这两个节点时利用求和线段钩直接求出重链上节点的权值和，将结果合并即可。  </p>
+<p>如果需要单节点修改权值的话直接利用散列值在线段钩上修改即可。<br>如果需要双节点间（包括这两个节点）的权值加减或者全部修改成某个指定值，方法与查询类似，对每一条重链进行修改即可。  </p>
+<h5 id="如何合并重链？"><a href="#如何合并重链？" class="headerlink" title="如何合并重链？"></a>如何合并重链？</h5><p>例如给定两个节点，我们要对其间的所有重链进行某一操作或查询。<br>设节点分别为l, r  </p>
+<p>有函数<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">depth(x);   <span class="comment">//返回节点深度</span></span><br><span class="line">head(x);    <span class="comment">//返回节点重链头</span></span><br><span class="line">fa(x);      <span class="comment">//返回节点爸爸</span></span><br><span class="line">locator(x); <span class="comment">//返回节点的散列值</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>当head(l) != head(r)即两节点不处在同一重链上时，进行下列操作  <ol>
+<li>我们找depth(head(x))值较大，即重链头深度较大的那个点，使它为l，另一个为r（相当于swap）。</li>
+<li>利用locator(x)找到重链在散列区间上的位置，使用线段钩或其他结构对这段区间进行操作或查询。如果是查询的话注意合并查询结果。</li>
+<li>使l = fa(head(l))</li>
+</ol>
+</li>
+<li>此时l和r在同一条重链上，再次对这条<strong>重链上的l和r节点（包括l和r）所构成的区间</strong>进行相同的操作或查询（如果你的结构不支持自动将操作查询的区间l，r normalize的话，注意使locator(x)较小的节点的locator值作为区间左界，另一个作为右界，不然容易RE）  </li>
+</ol>
+<hr>
+<p><span id="fulu"></span></p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="http://codevs.cn/problem/2460/" target="_blank" rel="external">ZJOI 2008 树的统计</a><br><img src="http://7xlxce.com1.z0.glb.clouddn.com/15-11-21/32603265.jpg" alt>  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Copyright 2015 CJSoft</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> CLEAR(x) memset(x, <span class="number">0</span>, sizeof(x))</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MXN = <span class="number">30007</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll; <span class="comment">//NOLINT</span></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">struct</span> edge &#123;</span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">edge</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">        to = a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; v[MXN];</span><br><span class="line"><span class="keyword">int</span> nodeweight[MXN];</span><br><span class="line"><span class="keyword">int</span> c_sub_nodes[MXN];</span><br><span class="line"><span class="keyword">int</span> fa[MXN];</span><br><span class="line"><span class="keyword">int</span> h_son[MXN];</span><br><span class="line"><span class="keyword">int</span> head[MXN];</span><br><span class="line"><span class="keyword">int</span> dep[MXN];</span><br><span class="line"><span class="keyword">int</span> locator[MXN];</span><br><span class="line"><span class="keyword">int</span> revlocator[MXN];</span><br><span class="line"><span class="keyword">int</span> tot = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs_1</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> from, <span class="keyword">int</span> depth)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!from) &#123;</span><br><span class="line">        fa[root] = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        fa[root] = from;</span><br><span class="line">    &#125;</span><br><span class="line">    dep[root] = depth;</span><br><span class="line">    c_sub_nodes[root] = <span class="number">1</span>;</span><br><span class="line">    h_son[root] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v[root].size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v[root][i] == from) <span class="keyword">continue</span>;</span><br><span class="line">        dfs_1(v[root][i], root, depth + <span class="number">1</span>);</span><br><span class="line">        c_sub_nodes[root] += c_sub_nodes[v[root][i]];</span><br><span class="line">        <span class="keyword">if</span> (c_sub_nodes[v[root][i]] &gt;= c_sub_nodes[h_son[root]]) &#123;</span><br><span class="line">            h_son[root] = v[root][i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs_2</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> hd)</span> </span>&#123;</span><br><span class="line">    locator[root] = tot;</span><br><span class="line">    revlocator[tot++] = root;</span><br><span class="line">    head[root] = hd;</span><br><span class="line">    <span class="keyword">if</span> (h_son[root]) &#123;</span><br><span class="line">        dfs_2(h_son[root], hd);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v[root].size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v[root][i] == h_son[root] || v[root][i] == fa[root]) <span class="keyword">continue</span>;</span><br><span class="line">        dfs_2(v[root][i], v[root][i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> RMQ_QJH_XDS &#123;</span><br><span class="line">    ll stree_rmq[MXN * <span class="number">4</span> + <span class="number">7</span>];</span><br><span class="line">    ll stree_qjh[MXN * <span class="number">4</span> + <span class="number">7</span>];</span><br><span class="line">    RMQ_QJH_XDS() &#123;</span><br><span class="line">        <span class="built_in">std</span>::fill(stree_rmq, stree_rmq + MXN * <span class="number">4</span> + <span class="number">7</span>, - <span class="number">1e9</span>);</span><br><span class="line">        <span class="built_in">std</span>::fill(stree_qjh, stree_qjh + MXN * <span class="number">4</span> + <span class="number">7</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lson</span><span class="params">(<span class="keyword">int</span> root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root &lt;&lt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rson</span><span class="params">(<span class="keyword">int</span> root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root &lt;&lt; <span class="number">1</span> | <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">            stree_rmq[root] = nodeweight[revlocator[l]];</span><br><span class="line">            stree_qjh[root] = nodeweight[revlocator[l]];</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> m = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        build(lson(root), l, m);</span><br><span class="line">        build(rson(root), m + <span class="number">1</span>, r);</span><br><span class="line">        stree_rmq[root] = <span class="built_in">std</span>::max(</span><br><span class="line">            stree_rmq[lson(root)],</span><br><span class="line">            stree_rmq[rson(root)]);</span><br><span class="line">        stree_qjh[root] = stree_qjh[lson(root)] + stree_qjh[rson(root)];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">ll <span class="title">rmq_query</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> queryl, <span class="keyword">int</span> queryr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (queryl &gt; queryr) <span class="built_in">std</span>::swap(queryl, queryr);</span><br><span class="line">        <span class="keyword">if</span> (queryl &gt; r || queryr &lt; l) <span class="keyword">return</span> - <span class="number">1e9</span>;</span><br><span class="line">        <span class="keyword">if</span> (queryl &lt;= l &amp;&amp; queryr &gt;= r) <span class="keyword">return</span> stree_rmq[root];</span><br><span class="line">        <span class="keyword">int</span> m = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">std</span>::max(rmq_query(lson(root), l, m, queryl, queryr),</span><br><span class="line">            rmq_query(rson(root), m + <span class="number">1</span>, r, queryl, queryr));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">ll <span class="title">qjh_query</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> queryl, <span class="keyword">int</span> queryr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (queryl &gt; queryr) <span class="built_in">std</span>::swap(queryl, queryr);</span><br><span class="line">        <span class="keyword">if</span> (queryl &gt; r || queryr &lt; l) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (queryl &lt;= l &amp;&amp; queryr &gt;= r) <span class="keyword">return</span> stree_qjh[root];</span><br><span class="line">        <span class="keyword">int</span> m = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> qjh_query(lson(root), l, m, queryl, queryr) +</span><br><span class="line">        qjh_query(rson(root), m + <span class="number">1</span>, r, queryl, queryr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">edit</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> pos, ll new_data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">            stree_qjh[root] = new_data;</span><br><span class="line">            stree_rmq[root] = new_data;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pos &gt; ((l + r) &gt;&gt; <span class="number">1</span>)) &#123;</span><br><span class="line">            edit(rson(root), ((l + r) &gt;&gt; <span class="number">1</span>) + <span class="number">1</span>, r, pos, new_data);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            edit(lson(root), l, (l + r) &gt;&gt; <span class="number">1</span>, pos, new_data);</span><br><span class="line">        &#125;</span><br><span class="line">        stree_rmq[root] = <span class="built_in">std</span>::max(stree_rmq[lson(root)],</span><br><span class="line">            stree_rmq[rson(root)]);</span><br><span class="line">        stree_qjh[root] = stree_qjh[lson(root)] +</span><br><span class="line">        stree_qjh[rson(root)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125; slpf;</span><br><span class="line"><span class="function">ll <span class="title">tree_rmq_query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    ll resu = - <span class="number">1e9</span>;</span><br><span class="line">    <span class="keyword">while</span> (head[l] != head[r]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dep[head[l]] &lt; dep[head[r]]) <span class="built_in">std</span>::swap(l, r);</span><br><span class="line">        resu = <span class="built_in">std</span>::max(resu,</span><br><span class="line">            slpf.rmq_query(<span class="number">1</span>, <span class="number">1</span>, tot - <span class="number">1</span>, locator[head[l]], locator[l]));</span><br><span class="line">        l = fa[head[l]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (locator[l] &gt; locator[r]) <span class="built_in">std</span>::swap(l, r);</span><br><span class="line">    resu = <span class="built_in">std</span>::max(resu,</span><br><span class="line">        slpf.rmq_query(<span class="number">1</span>, <span class="number">1</span>, tot - <span class="number">1</span>, locator[l], locator[r]));</span><br><span class="line">    <span class="keyword">return</span> resu;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">tree_qjh_query</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    ll resu = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (head[l] != head[r]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dep[head[l]] &lt; dep[head[r]]) <span class="built_in">std</span>::swap(l, r);</span><br><span class="line">        resu += slpf.qjh_query(<span class="number">1</span>, <span class="number">1</span>, tot - <span class="number">1</span>, locator[head[l]], locator[l]);</span><br><span class="line">        l = fa[head[l]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (locator[l] &gt; locator[r]) <span class="built_in">std</span>::swap(l, r);</span><br><span class="line">    resu += slpf.qjh_query(<span class="number">1</span>, <span class="number">1</span>, tot - <span class="number">1</span>, locator[l], locator[r]);</span><br><span class="line">    <span class="keyword">return</span> resu;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    CLEAR(nodeweight);</span><br><span class="line">    CLEAR(c_sub_nodes);</span><br><span class="line">    CLEAR(fa);</span><br><span class="line">    CLEAR(h_son);</span><br><span class="line">    CLEAR(head);</span><br><span class="line">    CLEAR(dep);</span><br><span class="line">    CLEAR(locator);</span><br><span class="line">    CLEAR(revlocator);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">int</span> tempa, tempb;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;tempa, &amp;tempb);</span><br><span class="line">        v[tempa].push_back(tempb);</span><br><span class="line">        v[tempb].push_back(tempa);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;nodeweight[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    head[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    dfs_1(<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    dfs_2(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">    slpf.build(<span class="number">1</span>, <span class="number">1</span>, tot - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">int</span> q;</span><br><span class="line">    <span class="keyword">char</span> tc[<span class="number">11</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;q);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; q; ++i) &#123;</span><br><span class="line">        CLEAR(tc);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s %d %d"</span>, tc, &amp;tempa, &amp;tempb);</span><br><span class="line">        <span class="keyword">if</span> (tc[<span class="number">1</span>] == <span class="string">'M'</span>) &#123;</span><br><span class="line">            ll asd = tree_rmq_query(tempa, tempb);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, asd);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tc[<span class="number">1</span>] == <span class="string">'S'</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, tree_qjh_query(tempa, tempb));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            slpf.edit(<span class="number">1</span>, <span class="number">1</span>, tot - <span class="number">1</span>, locator[tempa], tempb);</span><br><span class="line">            nodeweight[tempa] = tempb;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图论/">图论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/树链剖分/&title=《树链剖分小结》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/树链剖分/&title=《树链剖分小结》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/树链剖分/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《树链剖分小结》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/树链剖分/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/树链剖分/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/04/30/Wallace-Chu-的线段树风格/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Wallace Chu 的线段树风格</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/04/30/tarjan求强连通分量/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tarjan求强连通分量</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/04/30/树链剖分/&title=《树链剖分小结》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/04/30/树链剖分/&title=《树链剖分小结》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/04/30/树链剖分/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《树链剖分小结》 — 莱士新闻网&url=http://cjsoft.github.io/2016/04/30/树链剖分/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/04/30/树链剖分/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS3KEMAwFwNz/0mSbRTBPMpMKor2iqBlws1BZn6+veB0/1s79syev79y2MDAwHss4liv5Tb7dNfvsOnojBgbGCxjrUHj26Dw0J88/+3xJmMbAwMBYM9avr7IxMDAwPs1YbyI/gGJgYGD0ktikTFZNUKtHxhtycQwMjAcy8qr7319/pL+BgYHxKMZRXNWifzWUH62FgYExm5EHuN6RMdli0uCM2g8YGBhDGckARB7y8m1Vy20XMAwMjNGM6qhEXvTfv7Mz8IGBgTGJ0QuavQZAteVZCLUYGBijGb0/JAe+3p2d0h4GBsZsRj7ukAxb7OOrI2IYGBjvYeSF++rhr/pp8jbqLzAMDIyhjOrmkrBbTUerwfqiE4uBgTGIsW4A5FvpbboKu8jCMTAwXsPoDVjsDEn0EuayGAMD47GMnfCatCF32qXlNBgDA2MoI99uHjSrzYNqktycZcPAwHg4ozr00CvJ7YyXXQR0DAyM0Yy7Bi/uSpLzZ35kfgQDA+MfM9aJYi/JzF/fC8HlYQsMDIzRjOrqhdd8/CtqZGJgYAxl7A9y9RqW1f9iYGC8jdELpkk5LA+yeUi9OBRiYGAMZVSLbr3NRQe7jboZBgbGGxg3TJYV26J5YQ4DAwMjH+rKD3Z3NQOqaTAGBgZGtXmwU/RvpqkYGBgYraJ/8uTqoEbUicXAwBjKSJLY/AiYf4Kd5BYDA+M9jK3UsXhOS5Lb3sfCwMAYyvgGNp7RP6rBP38AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

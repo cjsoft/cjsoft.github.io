@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2019/04/01/tournament/">
+    
+    
+    <title>循环赛日程表问题报告 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="实验报告">
+    <meta name="description" content="循环赛日程表问题报告先来想想问题的约束条件
+我们要输出这么一张表
+
+如果n是奇数，则表是n行n列的，第j列包含除去j以外的所有从1到n的数字，除此之外还包括一个0（表示不参赛）。同一行中一个数字最多只能出现一次，可以不出现。
+如果n是偶数，则表是n-1行n列的，第j列包含除去j以外的所有从1到n的数字。同一行中一个数字最多只能出现一次，可以不出现。
+
+我们先考虑一下分治怎么做。特殊情况下例如n为2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="循环赛日程表问题报告">
+<meta property="og:url" content="http://cjsoft.github.io/2019/04/01/tournament/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="循环赛日程表问题报告先来想想问题的约束条件
+我们要输出这么一张表
+
+如果n是奇数，则表是n行n列的，第j列包含除去j以外的所有从1到n的数字，除此之外还包括一个0（表示不参赛）。同一行中一个数字最多只能出现一次，可以不出现。
+如果n是偶数，则表是n-1行n列的，第j列包含除去j以外的所有从1到n的数字。同一行中一个数字最多只能出现一次，可以不出现。
+
+我们先考虑一下分治怎么做。特殊情况下例如n为2">
+<meta property="og:image" content="http://cjsoft.github.io/2019/04/01/tournament/image_82.png">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.580Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="循环赛日程表问题报告">
+<meta name="twitter:description" content="循环赛日程表问题报告先来想想问题的约束条件
+我们要输出这么一张表
+
+如果n是奇数，则表是n行n列的，第j列包含除去j以外的所有从1到n的数字，除此之外还包括一个0（表示不参赛）。同一行中一个数字最多只能出现一次，可以不出现。
+如果n是偶数，则表是n-1行n列的，第j列包含除去j以外的所有从1到n的数字。同一行中一个数字最多只能出现一次，可以不出现。
+
+我们先考虑一下分治怎么做。特殊情况下例如n为2">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">循环赛日程表问题报告</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">循环赛日程表问题报告</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-01T09:25:17.000Z" itemprop="datePublished" class="page-time">
+  2019-04-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#循环赛日程表问题报告"><span class="post-toc-number">1.</span> <span class="post-toc-text">循环赛日程表问题报告</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-tournament"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">循环赛日程表问题报告</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019年04月01日 9:25" datetime="2019-04-01T09:25:17.000Z"  itemprop="datePublished">2019-04-01</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="循环赛日程表问题报告"><a href="#循环赛日程表问题报告" class="headerlink" title="循环赛日程表问题报告"></a>循环赛日程表问题报告</h1><p>先来想想问题的约束条件</p>
+<p>我们要输出这么一张表</p>
+<ul>
+<li>如果n是奇数，则表是n行n列的，第j列包含除去j以外的所有从1到n的数字，除此之外还包括一个0（表示不参赛）。同一行中一个数字最多只能出现一次，可以不出现。</li>
+<li>如果n是偶数，则表是n-1行n列的，第j列包含除去j以外的所有从1到n的数字。同一行中一个数字最多只能出现一次，可以不出现。</li>
+</ul>
+<p>我们先考虑一下分治怎么做。特殊情况下例如n为2的次幂的做法，我们已经在课堂上学过了。我们唯一要解决的是遇到奇数怎么办。很显然，对于奇数子问题，每天都会有一个人可以休息，不需要打比赛，为了让问题可以使用相近的办法处理，我们很容易的就想到了引入一个虚拟的玩家来陪这个人玩的方法。很显然这个引入的虚拟玩家不会在一天之内重复比赛，也不会与某个人重复多次比赛。仍然满足循环赛的性质。剩下的就和课堂上学的普通循环赛做法差不多了。</p>
+<p>分析一波复杂度。递归$\log{N}$次，每次copy来copy去的与$N^2$同阶。总复杂度$O(N^2\log{N})$。</p>
+<p>emmm，可是这张表的大小才$N^2$这么大啊，我们不能把这个$\log{N}$给去掉吗？可是只要我们进行分治，并且每次都要copy的话，这个复杂度肯定就下不来。去掉copy部分？好像有点难。</p>
+<p>不过我们何必局限于分治呢？我们直接想其他办法逼近下届$(N^2)$不好么？</p>
+<p>通过画图，我发现一个很棒的性质。对于奇数个玩家，如果把他们画成一个圈，遍历每个玩家，所产生的角点反射，正好构成了一个符合循环赛性质的置换集合。</p>
+<img src="/2019/04/01/tournament/image_82.png" alt="image_82.png" title>
+<div style="text-align: center;">以1为角的角点反射</div>
+
+<p>应用这个性质，我们很快就能够写出第一版，只支持计数的循环赛日程安排程序。</p>
+<p>我们再考虑n为偶数的时候，我们还能够应用和刚刚类似的方法去进行日程安排吗？</p>
+<p>很遗憾，不能。</p>
+<p>n为偶数的时候，总共有2n种反射方案，这2n种方案显然要进行一定的筛选才有可能生成一个可行的解，别扭不优雅。我们可以换种思路，结合一下分治做法当中引入虚拟玩家的思想，我们把偶数个的合法玩家中的一个先给踢出去，一会再想办法给他弄回来。这样问题就转化成为了在奇数个玩家种安排日程表的问题了，是我们刚刚已经解决的问题，我们可以套用那个算法。</p>
+<p>好，现在我们考虑如何把刚刚踢出去的玩家再给弄回来。奇数情况下的算法中，每个人至少会休息一天，那天没人和他比赛，那我们不妨让这个被踢出去的玩家在那些天比赛。由于这些0在一列当中只出现一次，在一行当中也只出现一次，把他替换成我们刚刚踢出去的玩家并不会破坏循环赛的性质，我们就给他加进去好了。</p>
+<p>emmm，问题好像就这么解决了？</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MXN <span class="number">107</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, days;</span><br><span class="line"><span class="keyword">int</span> arr[MXN * <span class="number">3</span>];</span><br><span class="line"><span class="keyword">int</span> vs[MXN][MXN];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">work</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    days = (n &amp; <span class="number">1</span>) ? n : n - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; days; ++i) &#123;</span><br><span class="line">        arr[i] = arr[i + days] = arr[i + days * <span class="number">2</span>] = i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; days; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= days / <span class="number">2</span>; ++j) &#123;</span><br><span class="line">            vs[i][arr[days + i - j]] = arr[days + i + j];</span><br><span class="line">            vs[i][arr[days + i + j]] = arr[days + i - j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((n &amp; <span class="number">1</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; days; ++i) &#123;</span><br><span class="line">            vs[i][i + <span class="number">1</span>] = n;</span><br><span class="line">            vs[i][n] = i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    work(n);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Player : "</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%4d"</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; days; ++i) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Day #%2d: "</span>, i + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%4d"</span>, vs[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实验报告/">实验报告</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2019/04/01/tournament/&title=《循环赛日程表问题报告》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2019/04/01/tournament/&title=《循环赛日程表问题报告》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2019/04/01/tournament/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《循环赛日程表问题报告》 — 莱士新闻网&url=http://cjsoft.github.io/2019/04/01/tournament/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2019/04/01/tournament/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/20/操作系统进程同步实验/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统进程同步实验</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/01/three-sort-algos/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">三种排序算法评价报告</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2019/04/01/tournament/&title=《循环赛日程表问题报告》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2019/04/01/tournament/&title=《循环赛日程表问题报告》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2019/04/01/tournament/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《循环赛日程表问题报告》 — 莱士新闻网&url=http://cjsoft.github.io/2019/04/01/tournament/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2019/04/01/tournament/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aQW6EMAwF0Ln/panU1UgV9Ntm1JK8rFAbII+FJ7bzesXj+B7v1+/j599/3nV279mc1ycGBgbGYxnH5UiWfj3nmpRcJ3gMDIwdGNUge31XPj957/UcDAwMjGtSwk6Wi4GBgfFpxnWy2kuPMTAwMHpJbB4W8//+QS6OgYHxQMYksfz09cf7GxgYGP+ecRRHEjSTxDVPgKNVYWBgLM3I25OTpeRhNJ8T7XAxMDCWYFSbkckSe4W56mbx9HcDAwNjOca8uVjlVQ+f5QfUMDAwVmUkyvxLTA5+9fAYGBh7MvIN3ChvbiXP0WkRDAyM5RjJiydBOS/995LhUxIGBsaijLy8lae4vaf1ynwYGBirMpJHVI9ZFKp6rY3gL0ksBgbGcowkOE4C66TlUG6IYmBgLM2YP2hySGLShMDAwNiBkTcDqqW0avGuWuHHwMDYh1Gd2tv89doAeVKNgYGxA6PXhsyLdNU+ah6Cox0uBgbG0ozqti9vds7fe0O5DQMD4yGMXijMU9/55jJqpmJgYGzDyDsJhRLYrR8iKrRhYGAsx8hH8ogq5tUaIwwGBsYDGUdxJEFwMrPalsDAwNiBUQ1zeeG+Go7zuuANvxsYGBgPZFRDZ493V0qMgYGxM2PSXMwPcvWKdNcfAgMDA6N3tCKnVtsGpyvHwMDAKG7X8iMXk80lBgbGboxqiX9S+p8kuhgYGHsyqo2BXqCshtS7kl4MDIyHM74A/Vb1Gx6thm4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

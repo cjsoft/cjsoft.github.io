@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2019/07/07/计网课程设计DNS服务器/">
+    
+    
+    <title>计网课程设计DNS服务器 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="狗课">
+    <meta name="description" content="为了分散平时的课业压力，计网课程设计选了小学期，不过课程内容都是一样的。
+要写一个DNS服务器。提供一个A记录列表，要求对于本地存在的记录，若查询结果为0.0.0.0，返回NX_DOMAIN，其他结果正常返回。对于本地处理不了的请求，转发到另一个DNS服务器进行递归查询。要求支持并发查询
+如果仅仅简单的完成功能的话，不需要对于报文进行完整的解读，只需要简单的看下ID，读下query看看能不能处理，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网课程设计DNS服务器">
+<meta property="og:url" content="http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="为了分散平时的课业压力，计网课程设计选了小学期，不过课程内容都是一样的。
+要写一个DNS服务器。提供一个A记录列表，要求对于本地存在的记录，若查询结果为0.0.0.0，返回NX_DOMAIN，其他结果正常返回。对于本地处理不了的请求，转发到另一个DNS服务器进行递归查询。要求支持并发查询
+如果仅仅简单的完成功能的话，不需要对于报文进行完整的解读，只需要简单的看下ID，读下query看看能不能处理，">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计网课程设计DNS服务器">
+<meta name="twitter:description" content="为了分散平时的课业压力，计网课程设计选了小学期，不过课程内容都是一样的。
+要写一个DNS服务器。提供一个A记录列表，要求对于本地存在的记录，若查询结果为0.0.0.0，返回NX_DOMAIN，其他结果正常返回。对于本地处理不了的请求，转发到另一个DNS服务器进行递归查询。要求支持并发查询
+如果仅仅简单的完成功能的话，不需要对于报文进行完整的解读，只需要简单的看下ID，读下query看看能不能处理，">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">计网课程设计DNS服务器</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">计网课程设计DNS服务器</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-07T17:58:04.000Z" itemprop="datePublished" class="page-time">
+  2019-07-07
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-计网课程设计DNS服务器"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">计网课程设计DNS服务器</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019年07月07日 17:58" datetime="2019-07-07T17:58:04.000Z"  itemprop="datePublished">2019-07-07</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>为了分散平时的课业压力，计网课程设计选了小学期，不过课程内容都是一样的。</p>
+<p>要写一个DNS服务器。提供一个A记录列表，要求对于本地存在的记录，若查询结果为0.0.0.0，返回NX_DOMAIN，其他结果正常返回。对于本地处理不了的请求，转发到另一个DNS服务器进行递归查询。要求支持并发查询</p>
+<p>如果仅仅简单的完成功能的话，不需要对于报文进行完整的解读，只需要简单的看下ID，读下query看看能不能处理，然后组个只有一个RR的包就可以了。远程DNS服务器发回来的包也不需要仔细解读，只需要取报文前两个字节做下ID转换就行了。</p>
+<p>若要进行更为细致的解读，则需要支持域名标识符解压功能，因为绝大多数DNS服务器在返回结果的时候，都会重用域名标识符后缀来进行压缩。除此之外，支持压缩功能也是极好，因为有的DNS服务器在查询一些CDN域名的时候，会返回10多条RR记录，解压之后无压缩重新组包会轻而易举的越过DNS报文512字节的限制，从而导致Malformed Packet。</p>
+<p>在为DNS服务器添加cache功能的时候，我发现了一个有意思的现象：我看过的所有具有多个RR的DNS应答报文，RR的TTL都是相同的。与其他同学交流后发现，有的同学看到了不同TTL的DNS应答报文。上网查询资料，<a href="https://tools.ietf.org/html/rfc2181#section-5.2" target="_blank" rel="external">RFC 2181 Section 5.2</a>里面是这么说的</p>
+<blockquote>
+<p>Resource Records also have a time to live (TTL). It is possible for the RRs in an RRSet to have different TTLs. No uses for this have been found that cannot be better accomplished in other ways. This can, however, cause partial replies (not marked “truncated”) from a caching server, where the TTLs for some but not all the RRs in the RRSet have expired.</p>
+<p>Consequently the use of differing TTLs in an RRSet is hereby deprecated, the TTLs of all RRs in an RRSet must be the same.</p>
+</blockquote>
+<p>也就是说TTL最好是一样的，于是我就大胆假设我们用的上级服务器是遵守了RFC 2181中的建议，随便从RRSet当中抽了一个RR中的TTL当成整个应答报文的TTL（一般只要TTL错的不是特别离谱，就不会影响DNS服务器的功能性）。</p>
+<p>在实际的代码编写与调试当中，我遇到了不同线程的DNS报文对象中的一部分数据“窜”线程的现象。trouble shoot一下午发现原来是碰到了python的默认参数陷阱。在所有的类的构造函数中都把参数深拷贝一份，就把问题解决了。</p>
+<p>未完待续</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/狗课/">狗课</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/&title=《计网课程设计DNS服务器》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/&title=《计网课程设计DNS服务器》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《计网课程设计DNS服务器》 — 莱士新闻网&url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/20/操作系统进程同步实验/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">操作系统进程同步实验</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/&title=《计网课程设计DNS服务器》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/&title=《计网课程设计DNS服务器》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《计网课程设计DNS服务器》 — 莱士新闻网&url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2019/07/07/计网课程设计DNS服务器/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACxElEQVR42u3awW4iMRAE0Pz/T+9Ke4pEgKpuO8lKb04I8ODnw9hU98dHfP35d31+/fl6/M7j2NejXt/t8dPDFx4eHt5o6skknv3YvbHtqC+WAA8PD+8aL98MXo/NRyUP+tkmhIeHh/d7eMkkNkv2eiHw8PDw/kdesj3kh90ZFQ8PD+/38PKw9Wyw20bAF7MWPDw8vJg3K4D97Ovr9T08PDy8UVU9f+AmcW2ytSQBcTFbPDw8vAu8/NZtHNC2AuQtAu2hHA8PD+8sr40Y8laq/cK1M/libnh4eHiXebNmqbNh7qwY9nQsHh4e3jVenoKe+vm8kev1QrzZNvDw8PCu8ZKHe/JAb8tXebE/X74ojMDDw8Nb8Nr6exs9tJ/mC9d+ioeHh3eKd6rps40nZttMfTTHw8PDu8DLqZty/qm4dtUihoeHh3eI14aqObhtNUgWIi+eDTNjPDw8vJi3P/K2EW0yKi+5FXsdHh4e3pq3n1B+8M0f8fnWUqTUeHh4eId4+UG5LZLlj/vNNvPmYI2Hh4d3jTcr8Lfl/GRUG+y+uTMeHh7eNV57eN23SeXvt9Hwm30PDw8Pb83L26TaUHUWVbRbRXQfPDw8vKO8pADfthQk4eymR6w41uPh4eFd4M2CgE2LVT65aNKzYhgeHh7egpcfptv2rHwhNkWyY/8V8PDw8Ea8TayQ/3AeQ2y2h6h1AA8PD2/Em5HaItlmcrPWATw8PLx7vFmgMGucaotYx8IIPDw8vG/htSWovPa0OUzncckqHcHDw8ObJADNX/2yDWtWMGsP8TUSDw8Pr+TNWgFmD/1kaTYbw9MYFw8PD+8C72xjQXIET2D54fvp4uLh4eH9KG9T3DobdhQlNzw8PLxfwMsj1Nk3ixJXcqzHw8PDu8bLH9ZtVDErieXv4+Hh4X0/b9PYlBei2pL/gUnj4eHhnef9BSHmsYYmQV3VAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>

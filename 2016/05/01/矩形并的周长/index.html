@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" rel="stylesheet">
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?772023a59ec03c470d67f1f55203800f"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="http://wallacenews.tk/2016/05/01/矩形并的周长/">
+    
+    
+    <title>矩形并的周长 | 莱士新闻网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="OI,学习,算法,计算几何">
+    <meta name="description" content="今年省选有道题是圆面积的异或并，是扫描线的经典问题。徐人权的大纲上有太多东西我都不会，我恰好又翻到了扫描线，于是决定研究一下扫描线。目前为止我只做了一道扫描线的题，是POJ 1177，也是IOI 98的试题，Picture，学习的还不深，在此记录一些心得。
+
+先将平面上的元素按照一个固定的方向进行切割，把他们变成一个个按照这个方向排列的插入事件和删除事件，接着按照这个方向逐个处理事件并使用某种数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩形并的周长">
+<meta property="og:url" content="http://cjsoft.github.io/2016/05/01/矩形并的周长/index.html">
+<meta property="og:site_name" content="莱士新闻网">
+<meta property="og:description" content="今年省选有道题是圆面积的异或并，是扫描线的经典问题。徐人权的大纲上有太多东西我都不会，我恰好又翻到了扫描线，于是决定研究一下扫描线。目前为止我只做了一道扫描线的题，是POJ 1177，也是IOI 98的试题，Picture，学习的还不深，在此记录一些心得。
+
+先将平面上的元素按照一个固定的方向进行切割，把他们变成一个个按照这个方向排列的插入事件和删除事件，接着按照这个方向逐个处理事件并使用某种数据">
+<meta property="og:image" content="http://cjsoft.github.io/2016/05/01/矩形并的周长/1.png">
+<meta property="og:updated_time" content="2020-07-16T03:28:06.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="矩形并的周长">
+<meta name="twitter:description" content="今年省选有道题是圆面积的异或并，是扫描线的经典问题。徐人权的大纲上有太多东西我都不会，我恰好又翻到了扫描线，于是决定研究一下扫描线。目前为止我只做了一道扫描线的题，是POJ 1177，也是IOI 98的试题，Picture，学习的还不深，在此记录一些心得。
+
+先将平面上的元素按照一个固定的方向进行切割，把他们变成一个个按照这个方向排列的插入事件和删除事件，接着按照这个方向逐个处理事件并使用某种数据">
+    
+        <link rel="alternative" href="/atom.xml" title="莱士新闻网" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.8">
+<!--     <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <script src="/assets/js/amazeui.min.js"></script> -->
+    
+    <script>window.lazyScripts=[]</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body>
+    
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Wallace Chu</h5>
+          <a href="mailto:egwcyh@qq.com" title="egwcyh@qq.com" class="mail">egwcyh@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/cjsoft" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/fav/"  >
+                <i class="icon icon-lg icon-star"></i>
+                收藏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tribute.html" target="_blank" >
+                <i class="icon icon-lg icon-user-circle"></i>
+                致敬
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-certificate"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/friends"  >
+                <i class="icon icon-lg icon-link"></i>
+                友链
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">矩形并的周长</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">矩形并的周长</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-01T08:20:21.000Z" itemprop="datePublished" class="page-time">
+  2016-05-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-矩形并的周长"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">矩形并的周长</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016年05月01日 8:20" datetime="2016-05-01T08:20:21.000Z"  itemprop="datePublished">2016-05-01</time>
+
+            
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>今年省选有道题是圆面积的异或并，是扫描线的经典问题。徐人权的大纲上有太多东西我都不会，我恰好又翻到了扫描线，于是决定研究一下扫描线。<br>目前为止我只做了一道扫描线的题，是POJ 1177，也是IOI 98的试题，Picture，学习的还不深，在此记录一些心得。</p>
+<blockquote>
+<p>先将平面上的元素按照一个固定的方向进行切割，把他们变成一个个按照这个方向排列的插入事件和删除事件，接着按照这个方向逐个处理事件并使用某种数据结构对当前信息进行维护，通过当前信息累计，最终求得答案。</p>
+</blockquote>
+<p>Picture这道题的关键点倒不在于如何分割这些矩形，而是在于如何维护当前信息。<br>就像许多网上能够查到的该题的AC代码一样，我使用了线段树来维护信息。<br>不过AC代码中存在一个令我感到困惑的地方：</p>
+<ul>
+<li>线段树涉及到了区间快速操作，却没有tag，虽然有一个cnt域，根据这个域的定义，一个节点的祖先的cnt域不应大于该节点的cnt域，但是这个cnt域既不会上推，也不会下传，显然不能满足定义。</li>
+</ul>
+<p>根据我的胡乱猜测，没有tag是因为我们的查询仅仅涉及整个区间，更小的区间的cnt域正确与否对我们所需要的结果产生不了影响。除此之外，在对一个区间进行减操作之前，之前一定会对其进行至少一个加操作，使得cnt域不会出现负数。</p>
+<p>根据脑洞，这道题至少可以用三种不同的方法进行解答。<br>是由子方法A、B组合出来的。子方法A、B在我的提交代码中均有体现，实际上，我用的是AB组合<br><a href="/2016/05/01/矩形并的周长/国家集训队1999论文集-陈宏.doc" title="陈宏的论文">陈宏的论文</a><br>下面贴上代码及提交截图<br><img src="/2016/05/01/矩形并的周长/1.png" alt="1.png" title><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> lson(x) (x &lt;&lt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> rson(x) (x &lt;&lt; <span class="number">1</span> | <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> mid(l, r) ((l + r) &gt;&gt; <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MXN <span class="number">10007</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">struct</span> seg &#123;</span><br><span class="line">    <span class="keyword">int</span> x1, x2, y, atag;</span><br><span class="line">    seg() &#123;x1 = x2 = y = atag = <span class="number">0</span>;&#125;</span><br><span class="line">    seg(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c, <span class="keyword">int</span> d):x1(a),x2(b),y(c),atag(d) &#123;&#125;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> seg &amp;b) <span class="keyword">const</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> y == b.y ? atag &gt; b.atag : y &lt; b.y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; ss[MXN];</span><br><span class="line"><span class="keyword">int</span> cnt[<span class="number">20000</span> &lt;&lt; <span class="number">2</span> | <span class="number">7</span>], lne[<span class="number">20000</span> &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">bool</span> lbd[<span class="number">20000</span> &lt;&lt; <span class="number">2</span> | <span class="number">7</span>], rbd[<span class="number">20000</span> &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="keyword">int</span> stree[<span class="number">20000</span> &lt;&lt; <span class="number">2</span> | <span class="number">7</span>];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">pushup</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (cnt[root]) &#123;</span><br><span class="line">        lbd[root] = rbd[root] = <span class="literal">true</span>;</span><br><span class="line">        stree[root] = r - l + <span class="number">1</span>;</span><br><span class="line">        lne[root] = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">        lbd[root] = rbd[root] = <span class="literal">false</span>;</span><br><span class="line">        lne[root] = stree[root] = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        stree[root] = stree[lson(root)] + stree[rson(root)];</span><br><span class="line">        lne[root] = lne[lson(root)] + lne[rson(root)];</span><br><span class="line">        <span class="keyword">if</span> (rbd[lson(root)] &amp;&amp; lbd[rson(root)]) --lne[root];</span><br><span class="line">        lbd[root] = lbd[lson(root)];</span><br><span class="line">        rbd[root] = rbd[rson(root)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">adddata</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> al, <span class="keyword">int</span> ar, <span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt; ar || r &lt; al) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= al &amp;&amp; r &lt;= ar) &#123;</span><br><span class="line">        cnt[root] += data;</span><br><span class="line">        pushup(root, l, r);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    adddata(lson(root), l, mid(l, r), al, ar, data);</span><br><span class="line">    adddata(rson(root), mid(l, r) + <span class="number">1</span>, r, al, ar, data);</span><br><span class="line">    pushup(root, l, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n)) &#123;</span><br><span class="line">        <span class="keyword">int</span> a, b, c, d;</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> lbd = <span class="number">999999</span>, rbd = -<span class="number">999999</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d %d %d %d"</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span><br><span class="line">            lbd = <span class="built_in">std</span>::min(lbd, a);</span><br><span class="line">            rbd = <span class="built_in">std</span>::max(rbd, c);</span><br><span class="line">            ss[m++] = seg(a, c, b, <span class="number">1</span>);</span><br><span class="line">            ss[m++] = seg(a, c, d, -<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sort(ss, ss + m);</span><br><span class="line">        <span class="keyword">int</span> last = <span class="number">0</span>, resu = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            adddata(<span class="number">1</span>, lbd, rbd - <span class="number">1</span>, ss[i].x1, ss[i].x2 - <span class="number">1</span>, ss[i].atag);</span><br><span class="line">            <span class="keyword">if</span> (i != m - <span class="number">1</span>) resu += (lne[<span class="number">1</span>] &lt;&lt; <span class="number">1</span>) * (ss[i + <span class="number">1</span>].y - ss[i].y);</span><br><span class="line">            resu += <span class="built_in">std</span>::<span class="built_in">abs</span>(stree[<span class="number">1</span>] - last);</span><br><span class="line">            last = stree[<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, resu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        莱士迟暮、壮心不已
+    </div>
+    <footer>
+        <a href="http://cjsoft.github.io">
+            <img src="/img/avatar.jpg" alt="Wallace Chu">
+            Wallace Chu
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OI/">OI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算几何/">计算几何</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/01/矩形并的周长/&title=《矩形并的周长》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/01/矩形并的周长/&title=《矩形并的周长》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/01/矩形并的周长/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《矩形并的周长》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/01/矩形并的周长/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/01/矩形并的周长/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/05/01/囧/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">囧</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/01/这么长时间没出岔子真是奇迹/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">这么长时间没出岔子真是奇迹</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE3Ny8xNDcwNQ==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+<!-- <section class="comments" id="comments">
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_shortname = 'wallacenews';
+    lazyScripts.push('//' + disqus_shortname + '.disqus.com/embed.js')
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section> -->
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        一个铜板就卖两份报~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>博客内容遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>莱士新闻网 &copy; 2016 - 2020</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://cjsoft.github.io/2016/05/01/矩形并的周长/&title=《矩形并的周长》 — 莱士新闻网&pic=http://cjsoft.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://cjsoft.github.io/2016/05/01/矩形并的周长/&title=《矩形并的周长》 — 莱士新闻网&source=大新闻的力量！..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://cjsoft.github.io/2016/05/01/矩形并的周长/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《矩形并的周长》 — 莱士新闻网&url=http://cjsoft.github.io/2016/05/01/矩形并的周长/&via=http://cjsoft.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://cjsoft.github.io/2016/05/01/矩形并的周长/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aQY6EMAwFUe5/aWbbG0J9JxkJp7JCgs7wWHjs2NeF1/2znu7y58lvrx1LhgwZn2Xcw/X0TPqHyf5P1+PfypAh4xzGOBQ+XZPQTPCE9/LOMmTIkBEmeTy948FXhgwZMmoBdxxYxzuT0leGDBky0iKWF5npZ+Ip44JaXIYMGR9k8ATu/6+39DdkyJDxKcYdrjThS8PxXVoyZMjozag1IOdL3LRFispgGTJkNGWMwygJlPzojezM259BR0KGDBmNGDzwpakhT/uKn0mGDBkHMGrhr9Y84ENgPGTLkCHjHAYZg0hDJzmqS9uTL6eGMmTIaM2ohUWSMtYGv4LWpgwZMloz0qGKtPgkoTYdUEMfToYMGe0Yq47PVo1c8CgqQ4aMExh807WvxYtV1LSQIUNGa0Ya2tKCdsF/g7R8lSFDRjtGeog/8+q1u/HMiAwZMtoxyBbpwFYtxUyHLa70S8iQIePjDF4irio+0w8Xp4kyZMhox0gTspRdC/TxUZ0MGTIOY6QFZO1Yrbbz410ZMmQczJgpO/cNk8UBV4YMGS0Y/KhrPvi+hE6cFL40BmTIkNGCcYeLh0iyAx/vQEmhDBkymjJqncFaS6C2z8YGpwwZMj7FICFyVWmaNkr50ZsMGTJOYOwrMtPhsGLpK0OGDBlheyA47Zv4cBuHLWTIkNGCwVPAmXfgh3EyZMg4gUGKWJLq1YL1TEksQ4aMExi10pE3Nfkza8O0DBkyWjD+AFVO2xnsjdGmAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.4.8"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.4.8" async></script>
+
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+</html>
